@@ -23,7 +23,7 @@ Nesse sentido, o objetivo principal do projeto é a síntese condicional de tatu
 
 [Link para o vídeo de apresentação da proposta.]()
 
-![Neural Style Transfer](images/neural_style_transfer.png)
+![Neural Style Transfer](https://github.com/coimbra574/Projeto_IA376/blob/main/images/neural_style_transfer.jpeg)
 
 ## Metodologia Proposta
 
