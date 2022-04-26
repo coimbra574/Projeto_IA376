@@ -19,7 +19,7 @@ Segundo o *Oxford Handbook of the Development of Imagination* "a imaginação é
 
 O campo de *Deep Learning* experimenta na síntese de arte com técnicas como *Neural Style Transfer*, conforme a Figura 1, que baseia-se em redes convolucionais convencionais, como a *VGG*, e também com métodos baseados em redes generativas, como o *ArtGAN* e o *CAN* (*Creative Adversarial Network*). Os artigos de síntese de maior impacto baseiam-se em síntese de imagens naturais, como paisagens, ou de obras artísticas como quadros e pinturas. Objetiva-se entender como redes generativas se comportam em outros tipos de arte pouco exploradas, como tatuagens, que possuem características específicas do domínio e que diferem daquelas da arte convencional.
 
-Nesse sentido, o objetivo principal do projeto é a síntese condicional de tatuagens de diferentes estilos, como em uma *CGAN* (Mirza e Osindero, 2014). Um objetivo secundário seria a geração condicional de imagens de alta resolução conforme a *StyleGAN2* (Karras, Tero, et al. 2020).
+Nesse sentido, o objetivo principal do projeto é a síntese condicional de tatuagens de diferentes estilos, como em uma *CGAN* (Mirza e Osindero, 2014). 
 
 [Link para o vídeo de apresentação da proposta.]()
 
@@ -31,11 +31,23 @@ Para a primeira entrega, a metodologia proposta deve esclarecer:
 
 ### Base de dados
 
-Como não encontramos nenhuma base viável para o projeto (número suficiente de imagens, etc.), decidimos fazer um “image scrapper” com dados do Instagram e Pinterest a partir do código fornecido pelo [artigo do medium](medium.com/vasily-betin/artificially-generated-tattoo-2d5fbe0f5146). Com essas imagens coletadas, vamos limpar os dados visto que possivelmente algumas imagens não estarão relacionadas com tatuagens ou não serão imagens relevantes ao trabalho.
+Como não encontramos nenhuma base viável para o projeto (número suficiente de imagens, etc.), decidimos fazer um “image scrapper” com dados do Instagram e Pinterest a partir do código fornecido pelo [artigo do medium](medium.com/vasily-betin/artificially-generated-tattoo-2d5fbe0f5146). Pretendemos coletar de 10000 a 20000 imagens para que a GAN consiga aprender a gerar tatuagens de cada estilo devidamente. Como são muitas imagens e precisamos ter a classe de cada uma de antemão para alimentar a GAN, pretendemos classificar manualmente cerca de 1500 imagens, e usar estas para treinar um classificador, assim identificando as imagens restantes. Finalmente, essa base de dados será então dividida em 3 partes: 
+
+(i) - Uma para o treinamento da GAN
+
+(ii) - Outra para o treino de classificadores para análise quantitativa dos resultados da GAN. Este classificador será alimentado com um dataset de diferentes proporções de dados reais e sintéticos
+
+(iii) - Finalmente, uma proporção pequena de dados reais para validar os classificadores treinados anteriormente durante a análise
+
+(Diagrama aqui)
 
 ### Abordagens de modelagem generativa
 
-Como primeira abordagem, pretendemos usar um Conditional GAN (CGAN) para diferenciar entre os estilos de tatuagens (Ex: Maori, Tribal, etc). Isso para que tenhamos um parâmetro mais concreto de avaliação e também por ser um método mais simples de implementar. Além disso, não encontramos um projeto semelhante na literatura. De acordo com os resultados, tentaremos melhorar a qualidade das imagens a partir de técnicas do StyleGAN. Para isso, ou vamos tentar mesclar a CGAN com o StyleGAN experimentalmente, ou buscaremos algum artigo que já tenha essa estrutura implementada.
+Nossa abordagem será usar uma Conditional GAN (CGAN), de forma que será passado como entrada também o label de cada imagem tanto para o network gerador quanto discriminativo. Esta estrutura é bem semelhante a GAN original, inclusive sua função de objetivo, porém as distribuições agora são condicionais:
+
+(imagem função objetiva)
+(imagem comparação estruturas GAN e CGAN)
+
 
 ### Ferramentas a serem utilizadas
 
@@ -47,15 +59,12 @@ Como primeira abordagem, pretendemos usar um Conditional GAN (CGAN) para diferen
 
 ### Resultados esperados
 
-Para a CGAN esperamos que as imagens geradas sejam de baixa qualidade, mas que provavelmente seguirão a tendência de um estilo específico. Por esse motivo,  pretendemos também mesclar com a estrutura StyleGAN para gerar imagens que ainda sejam identificadas em estilos, porém de alta qualidade.
+Para a métrica FID, esperamos que o resultado seja baixo, mas até um certo limite para não apresentar overfitting. Já para o SSIM, quanto mais alto o valor, mais fiel a distribuição sintética será da distribuição real. Da mesma forma que o FID, também precisa ser um valor adequado para não termos overfitting. Durante a análise dos classificadores, é esperado que a métrica F1 seja muito parecida entre os resultados dos classifadores treinados com diferentes proporções de dados reais e sintéticos . Também esperamos que durante o MOS, os alunos tenham dificuldade de diferenciar tatuagens reais e sintéticas, e que consigam classificar facilmente entre os diferentes estilos. Vale ressaltar que existem limitações para o nosso modelo, já que a identificação inicial dos estilos não será feita por especialistas, e o número de imagens será limitado. 
 
 ### Proposta de avaliação
 
-A avaliação quantitativa será feita com métodos de avaliação conhecidos, como Frechet Inception Distance (FID), Inception Score, Structural Similarity Index Measure, Nearest Neighbour Adversarial Accuracy, etc. Também avaliaremos o desempenho de um classificador usando diferentes mixes de dados sintéticos e reais em algum dataset. Por fim, usaremos o MOS (Mean Opinion Scores) como método qualitativo, usando como base os alunos da disciplina para diferenciar entre os diferentes estilos de tatuagem.
+A avaliação quantitativa será feita com métodos de avaliação conhecidos, como Frechet Inception Distance (FID) e o Structural Similarity Index Measure (SSIM). O FID mede a "distância" entre as distribuições, enquanto o SSIM tenta medir a percepção de similaridade, procurando por características relevantes a percepção visual humana. Essas medidas foram escolhidas justamente por serem complementares: uma mede a fidelidade e outra a diversidade. Ainda dentro dos métodos quantitativos, também avaliaremos o desempenho de classificadores treinados com diferentes mixes de dados sintéticos e reais, que serão testados com os dados de teste definidos no item (iii). Por fim, utilizaremos o MOS (Mean Opinion Scores) como método qualitativo, usando como base os alunos da disciplina para diferenciar entre os diferentes estilos de tatuagem.
 
-#### Treinamento dos avaliadores
-
-Alvaro
 
 ## Cronograma
 | Tarefa  | 20/04 | 27/04 | 04/05 | 11/05 | 18/05 | 25/05 | 01/06 | 08/06 | 15/06 | 22/06 | 29/06 | 04/07 | 06/07 |
