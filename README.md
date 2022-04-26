@@ -33,18 +33,22 @@ Como não encontramos nenhuma base viável para o projeto (número suficiente de
 
 (i) - Uma para o treinamento da GAN
 
-(ii) - Outra para o treino de classificadores para análise quantitativa dos resultados da GAN. Este classificador será alimentado com um dataset de diferentes proporções de dados reais e sintéticos
+(ii) - Outra para o treino de classificadores para análise dos resultados da GAN. Este classificador será alimentado com um dataset de diferentes proporções de dados reais e sintéticos
 
-(iii) - Finalmente, uma proporção pequena de dados reais para validar os classificadores treinados anteriormente durante a análise
+(iii) - Finalmente, uma proporção pequena de dados reais para validar os classificadores treinados durante a análise do item anterior
 
 
 ### Abordagens de modelagem generativa
 
-Nossa abordagem será usar uma Conditional GAN (CGAN), de forma que será passado como entrada também o label de cada imagem tanto para o network gerador quanto discriminativo. Esta estrutura é bem semelhante a GAN original, inclusive sua função de objetivo, porém as distribuições agora são condicionais:
+Nossa abordagem será usar uma Conditional GAN (CGAN). Como podemos ver abaixo, esta estrutura é bem semelhante a GAN original, e o que diferencia é apenas que na entrada das redes neurais vamos passar também o label de cada imagem:
+
+![Estrutura_CGAN](https://github.com/coimbra574/Projeto_IA376/blob/main/images/Estruturas_GAN_CGAN.PNG)
+
+A função objetivo também é bem semelhante à GAN, porém as distribuições são condicionais:
 
 ![Func_obj](https://github.com/coimbra574/Projeto_IA376/blob/main/images/Objective_func_CGAN.PNG)
 
-![Estrutura_CGAN](https://github.com/coimbra574/Projeto_IA376/blob/main/images/Estruturas_GAN_CGAN.PNG)
+Essa extensão da GAN para sua forma condicional CGAN permite que sejam criadas imagens sintéticas de classes específicas, o que justifica a nossa escolha, já que queremos criar tatuagens sintéticas de estilos diferentes. 
 
 
 ### Ferramentas a serem utilizadas
@@ -57,11 +61,15 @@ Nossa abordagem será usar uma Conditional GAN (CGAN), de forma que será passad
 
 ### Proposta de avaliação
 
-A avaliação quantitativa será feita com métodos de avaliação conhecidos, como Frechet Inception Distance (FID) e o Structural Similarity Index Measure (SSIM). O FID mede a "distância" entre as distribuições, enquanto o SSIM tenta medir a percepção de similaridade, procurando por características relevantes a percepção visual humana. Essas medidas foram escolhidas justamente por serem complementares: uma mede a fidelidade e outra a diversidade. Ainda dentro dos métodos quantitativos, também avaliaremos o desempenho de classificadores treinados com diferentes mixes de dados sintéticos e reais, que serão testados com os dados de teste definidos no item (iii). Por fim, utilizaremos o MOS (Mean Opinion Scores) como método qualitativo, usando como base os alunos da disciplina para diferenciar entre os diferentes estilos de tatuagem.
+A avaliação quantitativa será feita com métodos de avaliação conhecidos, como Frechet Inception Distance (FID) e o Structural Similarity Index Measure (SSIM). O FID mede a "distância" entre as distribuições, enquanto o SSIM tenta medir a percepção de similaridade, procurando por características relevantes a percepção visual humana. Essas medidas foram escolhidas pelo grupo justamente por serem complementares. Também avaliaremos o desempenho de classificadores treinados com diferentes mixes de dados sintéticos e reais, que serão testados com os dados de teste definidos no item (iii) da seção Base de Dados. Por fim, utilizaremos o MOS (Mean Opinion Scores) como método qualitativo, usando como base os alunos da disciplina para diferenciar entre os diferentes estilos de tatuagem.
 
 ### Resultados esperados
 
 Para a métrica FID, esperamos que o resultado seja baixo, mas até um certo limite para não apresentar overfitting. Já para o SSIM, quanto mais alto o valor, mais fiel a distribuição sintética será da distribuição real. Da mesma forma que o FID, também precisa ser um valor adequado para não termos overfitting. Durante a análise dos classificadores, é esperado que a métrica F1 seja muito parecida entre os resultados dos classifadores treinados com diferentes proporções de dados reais e sintéticos . Também esperamos que durante o MOS, os alunos tenham dificuldade de diferenciar tatuagens reais e sintéticas, e que consigam classificar facilmente entre os diferentes estilos. Vale ressaltar que existem limitações para o nosso modelo, já que a identificação inicial dos estilos não será feita por especialistas, e o número de imagens será limitado. 
+
+### Overview 
+
+![Overview](https://github.com/coimbra574/Projeto_IA376/blob/main/images/overview_diagram.PNG)
 
 ## Cronograma
 | Tarefa  | 20/04 | 27/04 | 04/05 | 11/05 | 18/05 | 25/05 | 01/06 | 08/06 | 15/06 | 22/06 | 29/06 | 04/07 | 06/07 |
@@ -93,3 +101,11 @@ Gatys, Leon A., Alexander S. Ecker, and Matthias Bethge. "A neural algorithm of 
 Tan, Wei Ren, et al. "ArtGAN: Artwork synthesis with conditional categorical GANs." 2017 IEEE International Conference on Image Processing (ICIP). IEEE, 2017.
 
 Elgammal, Ahmed, et al. "Can: Creative adversarial networks, generating" art" by learning about styles and deviating from style norms." arXiv preprint arXiv:1706.07068 (2017).
+
+Mino, Ajkel & Spanakis, Gerasimos. (2018). LoGAN: Generating Logos with a Generative Adversarial Neural Network Conditioned on color.
+
+Wang, Z., Bovik, A.C., Sheikh, H.R., Simoncelli, E.P. Image quality assessment: from error visibility to structural similarity. IEEE Transactions on Image Processing, 2004, 13 (4)
+
+Borji, Ali. Pros and Cons of GAN Evaluation Measures. 2018. arXiv preprint arXiv:1802.03446v5.
+
+Goodfellow, Ian; Pouget-Abadie, Jean; Mirza, Mehdi; Xu, Bing; Warde-Farley, David; Ozair, Sherjil; Courville, Aaron; Bengio, Yoshua (2014). "Generative Adversarial Nets". Proceedings of the International Conference on Neural Information Processing Systems (NIPS 2014). pp. 2672–2680
