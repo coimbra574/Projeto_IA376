@@ -57,14 +57,13 @@ Nossa abordagem será usar uma Conditional GAN (CGAN), de forma que será passad
 - Google Colab
 - Overleaf
 
-### Resultados esperados
-
-Para a métrica FID, esperamos que o resultado seja baixo, mas até um certo limite para não apresentar overfitting. Já para o SSIM, quanto mais alto o valor, mais fiel a distribuição sintética será da distribuição real. Da mesma forma que o FID, também precisa ser um valor adequado para não termos overfitting. Durante a análise dos classificadores, é esperado que a métrica F1 seja muito parecida entre os resultados dos classifadores treinados com diferentes proporções de dados reais e sintéticos . Também esperamos que durante o MOS, os alunos tenham dificuldade de diferenciar tatuagens reais e sintéticas, e que consigam classificar facilmente entre os diferentes estilos. Vale ressaltar que existem limitações para o nosso modelo, já que a identificação inicial dos estilos não será feita por especialistas, e o número de imagens será limitado. 
-
 ### Proposta de avaliação
 
 A avaliação quantitativa será feita com métodos de avaliação conhecidos, como Frechet Inception Distance (FID) e o Structural Similarity Index Measure (SSIM). O FID mede a "distância" entre as distribuições, enquanto o SSIM tenta medir a percepção de similaridade, procurando por características relevantes a percepção visual humana. Essas medidas foram escolhidas justamente por serem complementares: uma mede a fidelidade e outra a diversidade. Ainda dentro dos métodos quantitativos, também avaliaremos o desempenho de classificadores treinados com diferentes mixes de dados sintéticos e reais, que serão testados com os dados de teste definidos no item (iii). Por fim, utilizaremos o MOS (Mean Opinion Scores) como método qualitativo, usando como base os alunos da disciplina para diferenciar entre os diferentes estilos de tatuagem.
 
+### Resultados esperados
+
+Para a métrica FID, esperamos que o resultado seja baixo, mas até um certo limite para não apresentar overfitting. Já para o SSIM, quanto mais alto o valor, mais fiel a distribuição sintética será da distribuição real. Da mesma forma que o FID, também precisa ser um valor adequado para não termos overfitting. Durante a análise dos classificadores, é esperado que a métrica F1 seja muito parecida entre os resultados dos classifadores treinados com diferentes proporções de dados reais e sintéticos . Também esperamos que durante o MOS, os alunos tenham dificuldade de diferenciar tatuagens reais e sintéticas, e que consigam classificar facilmente entre os diferentes estilos. Vale ressaltar que existem limitações para o nosso modelo, já que a identificação inicial dos estilos não será feita por especialistas, e o número de imagens será limitado. 
 
 ## Cronograma
 | Tarefa  | 20/04 | 27/04 | 04/05 | 11/05 | 18/05 | 25/05 | 01/06 | 08/06 | 15/06 | 22/06 | 29/06 | 04/07 | 06/07 |
