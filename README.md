@@ -29,7 +29,7 @@ Nesse sentido, o objetivo principal do projeto é a síntese condicional de tatu
 
 ### Base de dados
 
-Como não encontramos nenhuma base viável para o projeto (número suficiente de imagens, etc.), decidimos fazer um “image scrapper” com dados do Instagram e Pinterest a partir do código fornecido pelo [artigo do medium](medium.com/vasily-betin/artificially-generated-tattoo-2d5fbe0f5146). Pretendemos coletar de 10000 a 20000 imagens para que a GAN consiga aprender a gerar tatuagens de cada estilo devidamente. Como são muitas imagens e precisamos ter a classe de cada uma de antemão para alimentar a GAN, pretendemos classificar manualmente cerca de 1500 imagens, e usar estas para treinar um classificador, assim identificando as imagens restantes. Finalmente, essa base de dados será então dividida em 3 partes: 
+Como não encontramos nenhuma base viável para o projeto (número suficiente de imagens, etc.), decidimos fazer um “image scrapper” com dados do Instagram e Pinterest a partir do código fornecido pelo [artigo](https://medium.com/vasily-betin/artificially-generated-tattoo-2d5fbe0f5146) do site de publicações "Medium" cujo autor usa uma StyleGAN para gerar tatuagens sintéticas. Pretendemos coletar de 10000 a 20000 imagens para que a GAN consiga aprender a gerar tatuagens de cada estilo devidamente. Como são muitas imagens e precisamos ter a classe de cada uma de antemão para alimentar a GAN, pretendemos classificar manualmente cerca de 1500 imagens, e usar estas para treinar um classificador, assim identificando as imagens restantes. Finalmente, essa base de dados será então dividida em 3 partes: 
 
 (i) - Uma para o treinamento da GAN
 
