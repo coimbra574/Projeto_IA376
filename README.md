@@ -27,8 +27,6 @@ Nesse sentido, o objetivo principal do projeto é a síntese condicional de tatu
 
 ## Metodologia Proposta
 
-Para a primeira entrega, a metodologia proposta deve esclarecer:
-
 ### Base de dados
 
 Como não encontramos nenhuma base viável para o projeto (número suficiente de imagens, etc.), decidimos fazer um “image scrapper” com dados do Instagram e Pinterest a partir do código fornecido pelo [artigo do medium](medium.com/vasily-betin/artificially-generated-tattoo-2d5fbe0f5146). Pretendemos coletar de 10000 a 20000 imagens para que a GAN consiga aprender a gerar tatuagens de cada estilo devidamente. Como são muitas imagens e precisamos ter a classe de cada uma de antemão para alimentar a GAN, pretendemos classificar manualmente cerca de 1500 imagens, e usar estas para treinar um classificador, assim identificando as imagens restantes. Finalmente, essa base de dados será então dividida em 3 partes: 
@@ -39,14 +37,14 @@ Como não encontramos nenhuma base viável para o projeto (número suficiente de
 
 (iii) - Finalmente, uma proporção pequena de dados reais para validar os classificadores treinados anteriormente durante a análise
 
-(Diagrama aqui)
 
 ### Abordagens de modelagem generativa
 
 Nossa abordagem será usar uma Conditional GAN (CGAN), de forma que será passado como entrada também o label de cada imagem tanto para o network gerador quanto discriminativo. Esta estrutura é bem semelhante a GAN original, inclusive sua função de objetivo, porém as distribuições agora são condicionais:
 
-(imagem função objetiva)
-(imagem comparação estruturas GAN e CGAN)
+![Func_obj](https://github.com/coimbra574/Projeto_IA376/blob/main/images/Objective_func_CGAN.PNG)
+
+![Estrutura_CGAN](https://github.com/coimbra574/Projeto_IA376/blob/main/images/Estruturas_GAN_CGAN.PNG)
 
 
 ### Ferramentas a serem utilizadas
