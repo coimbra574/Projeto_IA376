@@ -30,6 +30,10 @@ Figura 1. Representação de _Neural Style Transfer_ (Adaptado de [TensorFlow Co
 
 ## Metodologia Proposta
 
+### Overview 
+
+![Overview](https://github.com/coimbra574/Projeto_IA376/blob/main/images/overview_diagram.PNG)
+
 ### Base de dados
 
 Como não encontramos nenhuma base viável para o projeto (número suficiente de imagens, etc.), decidimos fazer um “image scrapper” com dados do Instagram e Pinterest a partir do código fornecido pelo [artigo](https://medium.com/vasily-betin/artificially-generated-tattoo-2d5fbe0f5146) do site de publicações "Medium" cujo autor usa uma StyleGAN para gerar tatuagens sintéticas. Pretendemos coletar de 10000 a 20000 imagens para que a GAN consiga aprender a gerar tatuagens de cada estilo devidamente. Como são muitas imagens e precisamos ter a classe de cada uma de antemão para alimentar a GAN, pretendemos classificar manualmente cerca de 1500 imagens, e usar estas para treinar um classificador, assim identificando as imagens restantes. Finalmente, essa base de dados será então dividida em 3 partes: 
@@ -69,10 +73,6 @@ A avaliação quantitativa será feita com métodos de avaliação conhecidos, c
 ### Resultados esperados
 
 Para a métrica FID, esperamos que o resultado seja baixo, mas até um certo limite para não apresentar overfitting. Já para o SSIM, quanto mais alto o valor, mais fiel a distribuição sintética será da distribuição real. Da mesma forma que o FID, também precisa ser um valor adequado para não termos overfitting. Durante a análise dos classificadores, é esperado que a métrica F1 seja muito parecida entre os resultados dos classifadores treinados com diferentes proporções de dados reais e sintéticos . Também esperamos que durante o MOS, os alunos tenham dificuldade de diferenciar tatuagens reais e sintéticas, e que consigam classificar facilmente entre os diferentes estilos. Vale ressaltar que existem limitações para o nosso modelo, já que a identificação inicial dos estilos não será feita por especialistas, e o número de imagens será limitado. 
-
-### Overview 
-
-![Overview](https://github.com/coimbra574/Projeto_IA376/blob/main/images/overview_diagram.PNG)
 
 ## Cronograma
 | Tarefa  | 20/04 | 27/04 | 04/05 | 11/05 | 18/05 | 25/05 | 01/06 | 08/06 | 15/06 | 22/06 | 29/06 | 04/07 | 06/07 |
