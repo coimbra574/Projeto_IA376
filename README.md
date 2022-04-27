@@ -21,7 +21,9 @@ O campo de *Deep Learning* experimenta na síntese de arte com técnicas como *N
 
 Nesse sentido, o objetivo principal do projeto é a síntese condicional de tatuagens de diferentes estilos, como em uma *CGAN* (Mirza e Osindero, 2014). 
 
-[Link para o vídeo de apresentação da proposta.]()
+[Vídeo de apresentação da proposta](https://drive.google.com/file/d/1rAyo6UhmEBPIiHuVSGYcdAIzqj5V1Ro8/view?usp=sharing)
+
+[Slides de apresentação da proposta](https://docs.google.com/presentation/d/1eDhK-lHYIR1Wcx5DfAkCAwHJCET9F_ZwPcIT8GlZu70/edit?usp=sharing)
 
 ![Neural Style Transfer](https://github.com/coimbra574/Projeto_IA376/blob/main/images/neural_style_transfer.jpeg)
 
