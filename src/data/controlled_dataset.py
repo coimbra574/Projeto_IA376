@@ -39,8 +39,8 @@ class ControlledDataset:
         """Build `sampling_strategy` dictionary according to expected by imblearn.
 
         Imbalanced learn library expects a dictionary with the amount of instances
-        of each class to perform the undersampling. This function build that dictionary
-        from given classes and proportion list.
+        of each class to perform the undersampling. This function builds that dictionary
+        from given classes and proportion lists.
 
         Parameters
         ----------
