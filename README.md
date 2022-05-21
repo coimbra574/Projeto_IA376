@@ -27,17 +27,27 @@ Recentemente outro modelo generativo obteve repercussão devido à qualidade das
 
 ## Metodologia Proposta
 
-### Overview
+Neste projeto investigaremos a capacidade de adequação à métrica de paridade estatística [7] de modelos generativos, com ênfase na comparação de modelos de difusão [9] com GANs [1]. Para isso, serão elaborados *toy problems* com o dataset MNIST para avaliação da distribuição das imagens sintéticas quando comparadas à distribuição do conjunto de treino. O modelo de difusão estudado será o Denoising Diffusion GAN (DDGAN) [11] e a arquitetura de GAN ainda será definida.
 
+### Conjunto de dados
 
+O conjunto de dados MNIST será reduzido de 10 para duas classes e em cada experimento a distribuição do conjunto de dados será controlada para avaliação da paridade estatística das imagens sintetizadas. Sendo assim, diferentemente do trabalho [5], a proporção das duas classes no conjunto de treino sofrerá modificações em cada experimento, ao invés das cores das imagens. Teremos três cenários de avaliação:
 
-
-### Base de dados
-
-
+1. Classes 1 e 2 com 30 e 70% do conjunto de treino, respectivamente.
+1. Classes 1 e 2 com 50 e 50% do conjunto de treino, respectivamente.
+1. Classes 1 e 2 com 70 e 30% do conjunto de treino, respectivamente.
 
 ### Abordagens de modelagem generativa
 
+#### DDGAN
+
+*Denoising Diffusion GAN* é a rede proposta por [11] para combater o `trilemma` dos modelos generativos usuais (GANs, VAEs e modelos de difusão), cujos resultados são sempre um `trade-off` entre três fatores: (1) rápida amostragem, (2) alta qualidade e (3) cobertura das modas dos dados de treino. Conforme a Figura 2, modelos de difusão [9] geram amostras de ótima qualidade e com cobertura das modas do conjunto de treino, mas o tempo de amostragem é elevado, impedindo seu uso em aplicações do mundo real. Na arquitetura proposta, o processo de `denoising` é modelado por uma *Conditional GAN* [12], de forma a aumentar em até 2000x a velocidade de amostragem para o conjunto CIFAR10 mantendo a qualidade dos dados sintéticos do modelo de difusão original. A arquitetura da DDGAN pode ser observada na Figura 3.
+
+![The generative trilemma](images/trilemma.png)
+
+![DDGAN](images/ddgan.png)
+
+#### Alguma arquitetura de GAN
 
 ### Ferramentas a serem utilizadas
 
@@ -48,6 +58,7 @@ Recentemente outro modelo generativo obteve repercussão devido à qualidade das
 - Overleaf
 
 ### Proposta de avaliação
+
 
 ### Resultados esperados
 
@@ -88,3 +99,5 @@ Recentemente outro modelo generativo obteve repercussão devido à qualidade das
 [10] A. Radford, J. W. Kim, C. Hallacy, A. Ramesh, G. Goh, S. Agarwal, G. Sastry, A. Askell, P. Mishkin, J. Clark et al., “Learning transferable visual models from natural language supervision,” in International Conference on Machine Learning. PMLR, 2021, pp. 8748–8763.
 
 [11] Z. Xiao, K. Kreis, and A. Vahdat, “Tackling the generative learning trilemma with denoising diffusion gans,” arXiv preprint arXiv:2112.07804, 2021.
+
+[12] M. Mirza and S. Osindero, “Conditional generative adversarial nets,” arXiv preprint arXiv:1411.1784, 2014.
