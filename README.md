@@ -65,18 +65,20 @@ O conjunto de dados MNIST será reduzido de 10 para duas classes e em cada exper
 
 
 ## Cronograma
-| Tarefa  | 20/04 | 27/04 | 04/05 | 11/05 | 18/05 | 25/05 | 01/06 | 08/06 | 15/06 | 22/06 | 29/06 | 04/07 | 06/07 |
-| ------- |:-------------:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| Coleta e limpeza de dataset | X | X | X | X |
-| Primeiras experimentações com arquitetura GAN | | X | X | X | X |
-| E3 - Checkpoint | | | | | X |
-| Aprofundamenteo de modelagem ||||| X | X | X | X |
-| Avaliação |||||||| X | X | X | X |
-| E4 - Entrega do código |||||||||||| X |
-| Escrita de Relatório ||||||| X | X | X | X | X | X | X |
+
+| Tarefa                                               | 20/04 | 27/04 | 04/05 | 11/05 | 18/05 | 25/05 | 01/06 | 08/06 | 15/06 | 22/06 | 29/06 | 04/07 | 06/07 |
+|------------------------------------------------------|-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|
+| Readequação da proposta e levantamento bibliográfico | x     | x     | x     | x     | x     | x     |       |       |       |       |       |       |       |
+| Experimentações iniciais com DDGAN                   |       |       |       | x     | x     | x     |       |       |       |       |       |       |       |
+| Desenvolvimento dos cenários de experimentação       |       |       |       |       | x     | x     | x     |       |       |       |       |       |       |
+| E2 - Checkpoint                                      |       |       |       |       |       | x     |       |       |       |       |       |       |       |
+| Alterações e validação do código da DDGAN            |       |       |       |       |       | x     | x     | x     |       |       |       |       |       |
+| Treinamento da DDGAN                                 |       |       |       |       |       |       | x     | x     | x     | x     | x     |       |       |
+| Treinamento da GAN                                   |       |       |       |       |       |       | x     | x     | x     | x     | x     |       |       |
+| E3 - Entrega do código                               |       |       |       |       |       |       |       |       |       |       |       | x     |       |
+| Escrita de relatório e compilação de resultados      |       |       |       |       |       |       | x     | x     | x     | x     | x     | x     | x     |
 
 ## Referências Bibliográficas
-
 
 [1] I. Goodfellow, J. Pouget-Abadie, M. Mirza, B. Xu, D. Warde-Farley, S. Ozair, A. Courville, and Y. Bengio, “Generative adversarial nets,” Advances in neural information processing systems, vol. 27, 2014.
 
