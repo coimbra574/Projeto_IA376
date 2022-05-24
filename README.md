@@ -45,11 +45,15 @@ Neste projeto investigaremos a capacidade de adequação à métrica de paridade
 
 ### Conjunto de dados
 
-O conjunto de dados MNIST será reduzido de 10 para duas classes e em cada experimento a distribuição do conjunto de dados será controlada para avaliação da paridade estatística das imagens sintetizadas. Sendo assim, diferentemente do trabalho [5], a proporção das duas classes no conjunto de treino sofrerá modificações em cada experimento, ao invés das cores das imagens. Teremos três cenários de avaliação:
+O conjunto de dados MNIST ser ́a modificado para todas as
+classes (d ́ıgitos) venham de dois grupos:
+- Grupo 1: imagens tradicionais do MNIST, dígitos em branco, fundo preto
+- Grupo 2: imagens MNIST invetidas, com dígitos em preto e fundo branco
 
-1. Classes 1 e 2 com 30 e 70% do conjunto de treino, respectivamente.
-1. Classes 1 e 2 com 50 e 50% do conjunto de treino, respectivamente.
-1. Classes 1 e 2 com 70 e 30% do conjunto de treino, respectivamente.
+Entao, produziremos três cenarios de avaliaçao, variando as proporçoes de cada grupo:
+- Cenario A: Grupo 1 e 2 com 30 e 70% do conjunto de treino, respectivamente.
+- Cenario B: Grupos 1 e 2 com 50 e 50% do conjunto de treino, respectivamente.
+- Cenario C: Grupos 1 e 2 com 70 e 30% do conjunto de treino, respectivamente.
 
 ### Abordagens de modelagem generativa
 
