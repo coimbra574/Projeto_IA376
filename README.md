@@ -58,11 +58,16 @@ Entao, produziremos três cenários de avaliação, variando as proporções de 
 
 #### DDGAN
 
-*Denoising Diffusion GAN* é a rede proposta por [11] para combater o `trilemma` dos modelos generativos usuais (GANs, VAEs e modelos de difusão), cujos resultados são sempre um `trade-off` entre três fatores: (1) rápida amostragem, (2) alta qualidade e (3) cobertura das modas dos dados de treino. Conforme a Figura 2, modelos de difusão [9] geram amostras de ótima qualidade e com cobertura das modas do conjunto de treino, mas o tempo de amostragem é elevado, impedindo seu uso em aplicações do mundo real. Na arquitetura proposta, o processo de `denoising` é modelado por uma *Conditional GAN* [12], de forma a aumentar em até 2000x a velocidade de amostragem para o conjunto CIFAR10 mantendo a qualidade dos dados sintéticos do modelo de difusão original. A arquitetura da DDGAN pode ser observada na Figura 3.
+*Denoising Diffusion GAN* é a rede proposta por [11] para combater o `trilemma` dos modelos generativos usuais (GANs, VAEs e modelos de difusão), cujos resultados são sempre um `trade-off` entre três fatores: (1) rápida amostragem, (2) alta qualidade e (3) cobertura das modas dos dados de treino. Conforme a Figura 2, modelos de difusão [9] geram amostras de ótima qualidade e com cobertura das modas do conjunto de treino, mas o tempo de amostragem é elevado, impedindo seu uso em aplicações do mundo real. Na arquitetura proposta, o processo de `denoising` é modelado por uma *Conditional GAN* [12], em vez de por Gaussianas Multimodais como nos modelos de difusão clássicos. Essa mudança na arquitetura, ilustrada na Figura 3, permite aumentar em até 2000x a velocidade de amostragem para o conjunto CIFAR10 mantendo a qualidade dos dados sintéticos do modelo de difusão original. A arquitetura da DDGAN pode ser observada na Figura 4.
 
 ![The generative trilemma](images/trilemma.png)
+Figura 2. O _trilemma_ de modelos genrativos
+
+![Denoising with Unimodal Gaussian vs GANS](images/diffusion_gaussian_vs_gans.png)
+Figura 3. Mudança introduzida pelas DDGANs: modelagem de _denoising_ usando GANs multimodais
 
 ![DDGAN](images/ddgan.png)
+Figura 4. Arquitetura da DDGAN
 
 #### Alguma arquitetura de GAN
 
