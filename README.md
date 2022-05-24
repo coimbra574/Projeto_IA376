@@ -19,7 +19,7 @@ A análise da capacidade de generalização e da representatividade em modelos g
 
 Nesse trabalho, será avaliado se essa cobertura de modas significa também paridade demográfica [4]. Serão treinados um modelo dessa arquitetura estado-da-arte, a _Denoising Diffusion GAN_, e um modelo da família das GANs, a ser definido, em um conjunto de dados MNIST modificado [5]. Dois grupos serão criados no conjunto de dados: i) número branco e fundo branco, e ii) número preto e fundo branco. Serão usadas três proporções para cada grupo, 30:70, 50:50 e 70:30, e amostras geradas de forma não condicionada terão as densidades de probabilidades de cada grupo medidas e comparadas com a do conjunto de dados de treino.
 
-## Descrição Resumida do Projeto
+## Descrição do Problema e Motivação
 
 São frequentes os relatos de bias na geração de imagens sintéticas com Generative Adversarial Networks [1]. Um exemplo que repercutiu na mídia foi o caso em que o algoritmo PULSE [2], que faz o upsample de imagens em baixa resolucção, [transformou o presidente Barack Obama em um homem branco](https://twitter.com/Chicken3gg/status/1274314622447820801). Esse algoritmo utiliza uma StyleGAN [3] como base do espaço de busca para o upsampling.
 
