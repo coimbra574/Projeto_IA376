@@ -41,16 +41,15 @@ Avaliar se a densidade de probabilidade para os diferentes grupos de imagens do 
 
 ## Metodologia Proposta
 
-Neste projeto investigaremos a capacidade de adequação à métrica de paridade estatística [7] de modelos generativos, com ênfase na comparação de modelos de difusão [9] com GANs [1]. Para isso, serão elaborados *toy problems* com o dataset MNIST para avaliação da distribuição das imagens sintéticas quando comparadas à distribuição do conjunto de treino. O modelo de difusão estudado será o Denoising Diffusion GAN (DDGAN) [11] e a arquitetura de GAN ainda será definida.
+Neste projeto investigaremos a capacidade de adequação à métrica de paridade demográfica [2] de modelos generativos, com ênfase na comparação de modelos de difusão [9] com GANs [1]. Para isso, serão elaborados *toy problems* com o dataset MNIST para avaliação da distribuição das imagens sintéticas quando comparadas à distribuição do conjunto de treino. O modelo de difusão estudado será o _Denoising Diffusion GAN_ (DDGAN) [11] e a arquitetura de GAN ainda será definida.
 
 ### Conjunto de dados
 
-O conjunto de dados MNIST ser ́a modificado para todas as
-classes (d ́ıgitos) venham de dois grupos:
+O conjunto de dados MNIST sera modificado para todas as classes (dígitos) venham de dois grupos:
 - Grupo 1: imagens tradicionais do MNIST, dígitos em branco, fundo preto
 - Grupo 2: imagens MNIST invetidas, com dígitos em preto e fundo branco
 
-Entao, produziremos três cenarios de avaliaçao, variando as proporçoes de cada grupo:
+Entao, produziremos três cenários de avaliação, variando as proporções de cada grupo:
 - Cenario A: Grupo 1 e 2 com 30 e 70% do conjunto de treino, respectivamente.
 - Cenario B: Grupos 1 e 2 com 50 e 50% do conjunto de treino, respectivamente.
 - Cenario C: Grupos 1 e 2 com 70 e 30% do conjunto de treino, respectivamente.
