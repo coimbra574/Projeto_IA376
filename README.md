@@ -33,7 +33,7 @@ Recentemente outro modelo generativo obteve repercussão devido à qualidade das
 
 ## Objetivos
 
-Avaliar se a solução proposta pela arquitetura _Desnoising Diffusion GANs_ (DDGANs) para o problema de cobertura de moda das arquiteturas baseadas em GANs também significa que paridade demográfica é atingida na distribuição das imagens geradas.
+Avaliar se a solução proposta pela arquitetura _Desnoising Diffusion GANs_ (DDGANs) para o problema de cobertura de moda das arquiteturas baseadas em GANs também significa que paridade demográfica [4] é atingida na distribuição das imagens geradas.
 
 ### Objetivos específicos
 
