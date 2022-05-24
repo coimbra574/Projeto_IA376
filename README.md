@@ -81,6 +81,7 @@ Figura 4. Arquitetura da DDGAN
 
 ### Proposta de avaliação
 
+Propomos utilizar abordagem semelhante ao que foi feito em[5], isto é, medir a densidade de probabilidade dos grupos nas imagens sintetizadas de forma não condicionada e comparar com as densidades nos conjuntos de dados de treino. Com esta metodologia se propõe avaliar a representatividade e o viés em imagens sintéticas aproximando o conceito de paridade demográfica usado por Salminem e colaboradores, em que um algoritmo sem viés deveria produzir imagens para cada grupo com a mesma probabilidade [4].
 
 ### Resultados esperados
 
