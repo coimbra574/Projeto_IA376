@@ -15,9 +15,9 @@ oferecida no primeiro semestre de 2022, na Unicamp, sob supervisão da Profa. Dr
 
 ## Resumo
 
-A análise da capacidade de generalização e da representatividade em modelos generativos, em particular sobre a ótica de vieses, tem ganhado bastante interesse da comunidade científica desde o recente renovado interesse na área de síntese de imagens proporcionado pelo desenvolvimento das Redes Generativas Adversárias. Tem-se observado que essa família de arquiteturas produz viéses de amostragem, o que tem despertado intenso interesse da comunidade científica. Recentemente, um modelo estado-da-arte foi proposto\cite{xiao2021tackling}, e os resultados reportados apontam para a solução do problema de representatividade (medido pela presença de todas as modas) do conjunto de dados de treino das GANs.
+A análise da capacidade de generalização e da representatividade em modelos generativos, em particular sobre a ótica de vieses, tem ganhado bastante interesse da comunidade científica desde o recente renovado interesse na área de síntese de imagens proporcionado pelo desenvolvimento das Redes Generativas Adversárias. Tem-se observado que essa família de arquiteturas produz viéses de amostragem, o que tem despertado intenso interesse da comunidade científica. Recentemente, um modelo estado-da-arte foi proposto[11], e os resultados reportados apontam para a solução do problema de representatividade (medido pela presença de todas as modas) do conjunto de dados de treino das GANs.
 
-Nesse trabalho, será avaliado se essa cobertura de modas significa também paridade demográfica \cite{salminen2020analyzing}. Serão treinados um modelo dessa arquitetura estado-da-arte, a _Denoising Diffusion GAN_, e um modelo da família das GANs, a ser definido, em um conjunto de dados MNIST modificado \cite{kenfack2021fairness}. Dois grupos serão criados no conjunto de dados: i) número branco e fundo branco, e ii) número preto e fundo branco. Serão usadas três proporções para cada grupo, 30:70, 50:50 e 70:30, e amostras geradas de forma não condicionada terão as densidades de probabilidades de cada grupo medidas e comparadas com a do conjunto de dados de treino.
+Nesse trabalho, será avaliado se essa cobertura de modas significa também paridade demográfica [4]. Serão treinados um modelo dessa arquitetura estado-da-arte, a _Denoising Diffusion GAN_, e um modelo da família das GANs, a ser definido, em um conjunto de dados MNIST modificado [5]. Dois grupos serão criados no conjunto de dados: i) número branco e fundo branco, e ii) número preto e fundo branco. Serão usadas três proporções para cada grupo, 30:70, 50:50 e 70:30, e amostras geradas de forma não condicionada terão as densidades de probabilidades de cada grupo medidas e comparadas com a do conjunto de dados de treino.
 
 ## Descrição Resumida do Projeto
 
@@ -41,7 +41,7 @@ Avaliar se a densidade de probabilidade para os diferentes grupos de imagens do 
 
 ## Metodologia Proposta
 
-Neste projeto investigaremos a capacidade de adequação à métrica de paridade demográfica [2] de modelos generativos, com ênfase na comparação de modelos de difusão [9] com GANs [1]. Para isso, serão elaborados *toy problems* com o dataset MNIST para avaliação da distribuição das imagens sintéticas quando comparadas à distribuição do conjunto de treino. O modelo de difusão estudado será o _Denoising Diffusion GAN_ (DDGAN) [11] e a arquitetura de GAN ainda será definida.
+Neste projeto investigaremos a capacidade de adequação à métrica de paridade demográfica [4] de modelos generativos, com ênfase na comparação de modelos de difusão [9] com GANs [1]. Para isso, serão elaborados *toy problems* com o dataset MNIST para avaliação da distribuição das imagens sintéticas quando comparadas à distribuição do conjunto de treino. O modelo de difusão estudado será o _Denoising Diffusion GAN_ (DDGAN) [11] e a arquitetura de GAN ainda será definida.
 
 ### Conjunto de dados
 
