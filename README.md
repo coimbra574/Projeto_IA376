@@ -84,6 +84,13 @@ Figura 4. Arquitetura da DDGAN
 
 ### Resultados esperados
 
+Até o momento, foi feita a readequação da proposta do projeto, visto que houve uma mudança temática. Foi decidido trabalhar com o artigo [11], mais especificamente o problema de viés, questão não muito explorada pelo autor, que focou apenas na demonstração de que a DDGAN cobre todas as modas. Isto é diferente da proposta do nosso trabalho, que pretende avaliar como diferentes proporções de grupos no conjunto de dados de treino afetam a paridade demográfica desses grupos no resultado. A fim de explorar melhor este assunto, prosseguimos com estudos de artigos relativos a modelos de difusão, problemas de viés e como medi-los, cobertura de moda, etc.
+
+Em termos práticos, foi feita a configuração do código da DDGAN apresentado em [11] para rodar a base MNIST e o MNIST controlado (adaptado com diferentes proporções). O código da DDGAN é extenso e a estrutura utilizada para treino é complexa, dificultando ligeiramente a manipulação. Entretanto, são fornecidos diversos parâmetros de entrada que permitem modificar relativamente a estrutura principal, assim possibilitando o uso no Google Colab comum. 
+
+### Conclusão
+
+Será analisada a paridade demográfica [4] dos modos em modelos de difusão, em especial a DDGAN que utiliza uma GAN condicional durante o processo de denoising. Pelo trilema das redes generativas [11], modelos de difusão são eficientes para gerar amostras de alta qualidade e diversidade (baixo viés), porém com um alto tempo de amostragem. A ideia da GAN para denoising é justamente diminuir este tempo de amostragem. Queremos verificar o quanto o uso da GAN na DDGAN afeta o viés ao mesmo tempo em que mantém este baixo tempo de amostragem, visto que a GAN é conhecida por produzir amostras com pouca diversidade. Para identificar essa influência do viés nos modelos, vamos utilizar como base as métricas descritas em [5]. Já começamos a modificar o código da DDGAN para a nossa base MNIST modificada, mas ainda faltam algumas etapas para a finalização do projeto. Para isso, precisamos: (i) Terminar de ajustar o código e treinar a DDGAN para a base MNIST modificada (ii) Rodar resultados da DDGAN para datasets de diferentes proporções do MNIST controlado, (iii) Implementação de uma GAN para comparações de resultados com a DDGAN, (iv) Análise dos resultados com base em métricas de viés, (v) Escrita de relatório. Estas etapas estão sumarizadas no cronograma abaixo.
 
 
 ## Cronograma
