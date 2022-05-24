@@ -31,6 +31,14 @@ Os resultados de um estudo posterior indicaram biases implícitos na StyleGAN [4
 
 Recentemente outro modelo generativo obteve repercussão devido à qualidade das imagens sintéticas: o DALLE-2 [8]. O resultado foi atingido a partir do poder conjunto de modelos de difusão [9] e de *embeddings* do CLIP [10]. Neste trabalho, objetiva-se o estudo dos possíveis biases presentes em modelos de difusão, de forma similar ao que foi realizado por [5] para as StackedGANs. Mais especificamente, serão comparadas as distribuicões das imagens geradas versus as distribuicões do conjunto de treino controlado para Denoising Diffusion GANs (DDGANs) [11] e uma arquitetura de GAN que ainda será definida.
 
+## Objetivos
+
+Avaliar se a solução proposta pela arquitetura \textit{Desnoising Diffusion GANS} (DDGAN) para o problema de cobertura de moda das arquiteturas baseadas em GANs também significa que paridade demográfica é atingida na distribuição das imagens geradas.
+
+### Objetivos específicos
+
+Avaliar se a densidade de probabilidade para os diferentes grupos de imagens do conjunto de dados de treino é reproduzida pelos modelos DDGAN e \texttt{<GAN a definir>}.
+
 ## Metodologia Proposta
 
 Neste projeto investigaremos a capacidade de adequação à métrica de paridade estatística [7] de modelos generativos, com ênfase na comparação de modelos de difusão [9] com GANs [1]. Para isso, serão elaborados *toy problems* com o dataset MNIST para avaliação da distribuição das imagens sintéticas quando comparadas à distribuição do conjunto de treino. O modelo de difusão estudado será o Denoising Diffusion GAN (DDGAN) [11] e a arquitetura de GAN ainda será definida.
