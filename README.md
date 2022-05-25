@@ -1,5 +1,5 @@
-# `Síntese Condicional de Tatuagens`
-# `Conditional Tattoo Synthesis`
+# `Sobre fairness na geração não condicional com modelos de difusão`
+# `On the fairness of unconditional generation with Diffusion Models`
 
 ## Apresentação
 
@@ -13,102 +13,132 @@ oferecida no primeiro semestre de 2022, na Unicamp, sob supervisão da Profa. Dr
 > | Tainá de Souza Coimbra  | 157305  | Eng. Elétrica/Computação (DECOM)|
 
 
-## Descrição Resumida do Projeto
+## Resumo
 
-Segundo o *Oxford Handbook of the Development of Imagination* "a imaginação é a capacidade de transcender mentalmente tempo, espaço e circunstâncias (Taylor 2013). Argúi-se que a *Imagination Science* será a área capaz de endereçar o problema de geração de amostras entendidas como "novas", "inovadoras" ou que se baseiam em conceitos criativos até então inacessíveis por pessoas. Arte, portanto, é um exemplo da capacidade imaginativa humana (Mahadevan, 2018).
+A análise da capacidade de generalização e da representatividade em modelos generativos, em particular sobre a ótica de vieses, tem ganhado interesse da comunidade científica desde o recente renovado interesse na área de síntese de imagens proporcionado pelo desenvolvimento das Redes Generativas Adversárias. Entretanto, tem-se observado que essa família de arquiteturas produz viéses de amostragem, o que tem despertado intenso interesse da comunidade científica. Recentemente, um modelo de síntese estado-da-arte baseado em processos de difusão foi proposto [1], e os resultados reportados apontam para a solução do problema de representatividade (medido pela presença de todas as modas) do conjunto de dados de treino das GANs.
 
-O campo de *Deep Learning* experimenta na síntese de arte com técnicas como *Neural Style Transfer*, conforme a Figura 1, que baseia-se em redes convolucionais convencionais, como a *VGG*, e também com métodos baseados em redes generativas, como o *ArtGAN* e o *CAN* (*Creative Adversarial Network*). Os artigos de síntese de maior impacto baseiam-se em síntese de imagens naturais, como paisagens, ou de obras artísticas como quadros e pinturas. Objetiva-se entender como redes generativas se comportam em outros tipos de arte pouco exploradas, como tatuagens, que possuem características específicas do domínio e que diferem daquelas da arte convencional.
+Neste trabalho, será avaliado se a cobertura de modas atingida significa também paridade demográfica [2]. Serão treinados um modelo dessa arquitetura estado-da-arte, a _Denoising Diffusion GAN_, e um modelo da família das GANs, a ser definido, em um conjunto de dados MNIST modificado [3]. Dois grupos serão criados no conjunto de dados: i) número branco e fundo branco, e ii) número preto e fundo branco. Serão realizados experimentos para três conjuntos de dados com diferentes proporções de imagens dos grupos (i) e (ii) no treino dos modelos: 30:70, 50:50 e 70:30. A seguir, serão sintetizadas *n* amostras de forma não condicionada, cujas proporções de imagens dos grupos (i) e (ii) serão comparadas com a do conjunto de dados de treino.
 
-Nesse sentido, o objetivo principal do projeto é a síntese condicional de tatuagens de diferentes estilos, como em uma *CGAN* (Mirza e Osindero, 2014). 
+## Descrição do Problema e Motivação
 
-[Vídeo de apresentação da proposta](https://drive.google.com/file/d/1gMa6kLvM8HA-Qn1lzsyJassvDKy_0cec/view?usp=sharing)
+São frequentes os relatos de viéses na geração de imagens sintéticas com *Generative Adversarial Networks* [4]. Um exemplo que repercutiu na mídia foi o caso em que o algoritmo PULSE [5], que faz o upsample de imagens em baixa resolucção, [transformou o presidente Barack Obama em um homem branco](https://twitter.com/Chicken3gg/status/1274314622447820801). Esse algoritmo utiliza uma StyleGAN [6] como base do espaço de busca para o upsampling.
 
-[Slides de apresentação da proposta](https://docs.google.com/presentation/d/1eDhK-lHYIR1Wcx5DfAkCAwHJCET9F_ZwPcIT8GlZu70/edit?usp=sharing)
+![PULSE bias](https://pbs.twimg.com/media/Ea9GZUbXsAEORIb?format=jpg&name=small)
 
-![Neural Style Transfer](https://github.com/coimbra574/Projeto_IA376/blob/main/images/neural_style_transfer.jpeg)
-Figura 1. Representação de _Neural Style Transfer_ (Adaptado de [TensorFlow Core - Neural Style Transfer](https://www.tensorflow.org/tutorials/generative/style_transfer))
+Figura 1: Algoritmo PULSE [5] faz o upsampling do presidente Barack Obama para um homem branco.
+
+Os resultados de um estudo posterior indicaram biases implícitos na *StyleGAN* [2] e viés racial nas imagens geradas: cerca de 73% das imagens geradas pelo método são de pessoas brancas, enquanto pessoas asiáticas e pretas aparecem em cerca de 14 e 10% das imagens sintéticas, respectivamente. Conforme os autores do estudo, a não geração de faces sintéticas de grupos sub-representados diminui ainda mais a habilidade desses indivíduos de serem vistos e ouvidos [2]. Entretanto, neste estudo não está claro se o problema de viés é exclusivo da arquitetura ou se tem interferência da distribuição dos dados de treinamento. Outro experimento com um conjunto de dados controlado [3] observou que, mesmo com uma população de treino constituída de classes balanceadas, StackedGANs [7] são incapazes de gerar imagens sintéticas com distribuições equivalentes. O problema é intensificado quando o conjunto de treino é desbalanceado. Conclui-se, portanto, que o uso dessa família de modelos pode enviesar as tarefas posteriores para as quais os dados sintéticos serão utilizados, já que não respeitam o conceito de *paridade demográfica* [2].
+
+Recentemente outros dois modelo generativos obtiveram repercussão devido à qualidade das imagens sintéticas: o Imagen [8] e o DALLE-2 [9]. Os resultado foram atingidos a partir do poder conjunto de modelos de difusão [9] e de *embeddings* do T5 [11] ou do CLIP [12], respectivamente. Neste trabalho, objetiva-se o estudo dos possíveis viéses presentes em modelos de difusão, de forma similar ao que foi realizado por [3] para as *StackedGANs*. Mais especificamente, serão comparadas as distribuicões das imagens geradas versus as distribuições do conjunto de treino controlado para *Denoising Diffusion GANs (DDGANs)* [1] e uma arquitetura de GAN que ainda será definida.
+
+## Objetivos
+
+Avaliar se a solução proposta pela arquitetura _Desnoising Diffusion GANs_ (DDGANs) para o problema de cobertura de moda das arquiteturas baseadas em GANs também significa que paridade demográfica é atingida na distribuição das imagens geradas.
+
+### Objetivos específicos
+
+Avaliar se a densidade de probabilidade para os diferentes grupos de imagens do conjunto de dados de treino é reproduzida pelos modelos DDGAN e a rede GAN a ser definida.
 
 ## Metodologia Proposta
 
-### Overview 
+Neste projeto investigaremos a capacidade de adequação à métrica de paridade demográfica [2] de modelos generativos, com ênfase na comparação de modelos de difusão [10] com GANs [4]. Para isso, serão elaborados *toy problems* com o dataset MNIST para avaliação da distribuição das imagens sintéticas quando comparadas à distribuição do conjunto de treino. O modelo de difusão estudado será o _Denoising Diffusion GAN_ (DDGAN) [1] e a arquitetura de GAN ainda será definida.
 
-![Overview](https://github.com/coimbra574/Projeto_IA376/blob/main/images/overview_diagram.PNG)
+### Conjunto de dados
 
-### Base de dados
+O conjunto de dados MNIST sera modificado para que todas as classes (dígitos) correspondam a um dos dois grupos:
+- Grupo 1: imagens tradicionais do MNIST, dígitos em branco, fundo preto
+- Grupo 2: imagens MNIST invertidas, com dígitos em preto e fundo branco
 
-Como não encontramos nenhuma base viável para o projeto (número suficiente de imagens, etc.), decidimos fazer um “image scrapper” com dados do Instagram e Pinterest a partir do código fornecido pelo [artigo](https://medium.com/vasily-betin/artificially-generated-tattoo-2d5fbe0f5146) do site de publicações "Medium" cujo autor usa uma StyleGAN para gerar tatuagens sintéticas. Pretendemos coletar de 10000 a 20000 imagens para que a GAN consiga aprender a gerar tatuagens de cada estilo devidamente. Como são muitas imagens e precisamos ter a classe de cada uma de antemão para alimentar a GAN, pretendemos classificar manualmente cerca de 1500 imagens, e usar estas para treinar um classificador, assim identificando as imagens restantes. Finalmente, essa base de dados será então dividida em 3 partes: 
-
-(i) - Uma para o treinamento da GAN
-
-(ii) - Outra para o treino de classificadores para análise dos resultados da GAN. Este classificador será alimentado com um dataset de diferentes proporções de dados reais e sintéticos
-
-(iii) - Finalmente, uma proporção pequena de dados reais para validar os classificadores treinados durante a análise do item anterior
-
+A seguir, três cenários de experimentação serão avaliados variando as proporções de cada grupo:
+- Cenario A: Grupo 1 e 2 com 30 e 70% do conjunto de treino, respectivamente.
+- Cenario B: Grupos 1 e 2 com 50 e 50% do conjunto de treino, respectivamente.
+- Cenario C: Grupos 1 e 2 com 70 e 30% do conjunto de treino, respectivamente.
 
 ### Abordagens de modelagem generativa
 
-Nossa abordagem será usar uma Conditional GAN (CGAN). Como podemos ver abaixo, esta estrutura é bem semelhante a GAN original, e o que diferencia é apenas que na entrada das redes neurais vamos passar também o label de cada imagem:
+#### DDGAN
 
-![Estrutura_CGAN](https://github.com/coimbra574/Projeto_IA376/blob/main/images/Estruturas_GAN_CGAN.PNG)
+*Denoising Diffusion GAN* é a rede proposta por [1] para combater o _trilemma_ dos modelos generativos usuais (GANs, VAEs e modelos de difusão), cujos resultados são sempre um _trade-off_ entre três fatores: (1) rápida amostragem, (2) alta qualidade e (3) cobertura das modas dos dados de treino. Conforme a Figura 2, modelos de difusão [10] geram amostras de ótima qualidade e com cobertura das modas do conjunto de treino, mas o tempo de amostragem é elevado, impedindo seu uso em aplicações do mundo real. Na arquitetura proposta, o processo de _denoising_ é modelado por uma *Conditional GAN* [13], em vez de por Gaussianas Multimodais como nos modelos de difusão clássicos. Essa mudança na arquitetura, ilustrada na Figura 3, permite aumentar em até 2000 vezes a velocidade de amostragem para o conjunto CIFAR10 mantendo a qualidade dos dados sintéticos do modelo de difusão original. A arquitetura da DDGAN pode ser observada na Figura 4.
 
-A função objetivo também é bem semelhante à GAN, porém as distribuições são condicionais:
+![The generative trilemma](images/trilemma.png)
 
-![Func_obj](https://github.com/coimbra574/Projeto_IA376/blob/main/images/Objective_func_CGAN.PNG)
+Figura 2. O _trilemma_ de modelos genrativos
 
-Essa extensão da GAN para sua forma condicional CGAN permite que sejam criadas imagens sintéticas de classes específicas, o que justifica a nossa escolha, já que queremos criar tatuagens sintéticas de estilos diferentes. 
+![Denoising with Unimodal Gaussian vs GANS](images/diffusion_gaussian_vs_gans.png)
 
+Figura 3. Mudança introduzida pelas DDGANs: modelagem de _denoising_ usando GANs multimodais
+
+![DDGAN](images/ddgan.png)
+
+Figura 4. Arquitetura da DDGAN [1]
 
 ### Ferramentas a serem utilizadas
 
 - Bibliotecas padrão de data science (Python 3, PyTorch, Pandas, etc.)
 - GitHub
-- Programa para o tag de imagens
 - Google Colab
+- Kaggle
 - Overleaf
 
 ### Proposta de avaliação
 
-A avaliação quantitativa será feita com métodos de avaliação conhecidos, como Frechet Inception Distance (FID) e o Structural Similarity Index Measure (SSIM). O FID mede a "distância" entre as distribuições, enquanto o SSIM tenta medir a percepção de similaridade, procurando por características relevantes a percepção visual humana. Essas medidas foram escolhidas pelo grupo justamente por serem complementares. Também avaliaremos o desempenho de classificadores treinados com diferentes mixes de dados sintéticos e reais, que serão testados com os dados de teste definidos no item (iii) da seção Base de Dados. Por fim, utilizaremos o MOS (Mean Opinion Scores) como método qualitativo, usando como base os alunos da disciplina para diferenciar entre os diferentes estilos de tatuagem.
+Propomos utilizar abordagem semelhante ao que foi feito em [3], isto é, medir a densidade de probabilidade dos grupos nas imagens sintetizadas de forma não condicionada e comparar com as densidades nos conjuntos de dados de treino. Com esta metodologia, propõe-se avaliar a representatividade e o viés em imagens sintéticas aproximando o conceito de paridade demográfica usado por Salminen et al. [2], em que um algoritmo sem viés deveria produzir imagens para cada grupo com a mesma probabilidade [2].
 
 ### Resultados esperados
 
-Para a métrica FID, esperamos que o resultado seja baixo, mas até um certo limite para não apresentar overfitting. Já para o SSIM, quanto mais alto o valor, mais fiel a distribuição sintética será da distribuição real. Da mesma forma que o FID, também precisa ser um valor adequado para não termos overfitting. Durante a análise dos classificadores, é esperado que a métrica F1 seja muito parecida entre os resultados dos classifadores treinados com diferentes proporções de dados reais e sintéticos . Também esperamos que durante o MOS, os alunos tenham dificuldade de diferenciar tatuagens reais e sintéticas, e que consigam classificar facilmente entre os diferentes estilos. Vale ressaltar que existem limitações para o nosso modelo, já que a identificação inicial dos estilos não será feita por especialistas, e o número de imagens será limitado. 
+![Resultados Esperados](images/density_possibilities.png)
+
+Figura 5. Resultados esperados após processo de sintetização com dados de treinamento balanceados ou não.
+
+#### Adequações do código
+
+Até o momento, foi feita a readequação da proposta do projeto, visto que houve uma mudança temática. Foi decidido trabalhar com o artigo [1], mais especificamente o problema de viés, questão não muito explorada pelo autor, que focou apenas na demonstração de que a DDGAN cobre todas as modas. Isto é diferente da proposta do nosso trabalho, que pretende avaliar como diferentes proporções de grupos no conjunto de dados de treino afetam a paridade demográfica desses grupos no resultado. A fim de explorar melhor este assunto, prosseguimos com estudos de artigos relativos a modelos de difusão, problemas de viés e como medi-los, cobertura de moda, etc.
+
+Em termos práticos, foi feita a configuração do código da DDGAN apresentado em [1] para rodar a base MNIST e o MNIST controlado (adaptado com diferentes proporções). O código da DDGAN é extenso e a estrutura utilizada para treino é complexa, dificultando ligeiramente a manipulação e tornando o treino computacionalmente custoso. Entretanto, são fornecidos diversos parâmetros de entrada que permitem modificar relativamente a estrutura principal. Espera-se que assim seja possível o uso no Google Colab para treinamento dos modelos.
+
+### Conclusão
+
+Será analisada a paridade demográfica [2] das modas em modelos de difusão, em especial a DDGAN que utiliza uma GAN condicional durante o processo de _denoising_. Pelo trilema das redes generativas [1], modelos de difusão são eficientes para gerar amostras de alta qualidade e diversidade (baixo viés), porém com um alto tempo de amostragem. A ideia do uso da CGAN para a etapa de denoising é para justamente diminuir esse tempo de amostragem. Queremos verificar o quanto o uso da GAN na DDGAN afeta o viés, em termos da paridade demográfica, ao mesmo tempo em que permite o baixo tempo de amostragem, visto que a GAN é conhecida por produzir amostras com pouca diversidade. Para identificar essa influência do viés nos modelos, vamos utilizar como base as métricas descritas em [3]. Já começamos a modificar o código da DDGAN para a nossa base MNIST modificada, mas ainda faltam etapas para a finalização do projeto, especialmente o treinamento dos modelos. Para isso, precisamos: (i) Terminar de ajustar o código e treinar a DDGAN para a base MNIST modificada (ii) Rodar resultados da DDGAN para datasets de diferentes proporções do MNIST controlado, (iii) Implementação de uma GAN para comparações de resultados com a DDGAN, (iv) Análise dos resultados com base em métricas de viés, (v) Escrita de relatório. Estas etapas estão sumarizadas no cronograma abaixo.
+
 
 ## Cronograma
-| Tarefa  | 20/04 | 27/04 | 04/05 | 11/05 | 18/05 | 25/05 | 01/06 | 08/06 | 15/06 | 22/06 | 29/06 | 04/07 | 06/07 |
-| ------- |:-------------:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| Coleta e limpeza de dataset | X | X | X | X |
-| Primeiras experimentações com arquitetura GAN | | X | X | X | X |
-| E3 - Checkpoint | | | | | X |
-| Aprofundamenteo de modelagem ||||| X | X | X | X |
-| Avaliação |||||||| X | X | X | X |
-| E4 - Entrega do código |||||||||||| X |
-| Escrita de Relatório ||||||| X | X | X | X | X | X | X |
+
+| Tarefa                                               | 20/04 | 27/04 | 04/05 | 11/05 | 18/05 | 25/05 | 01/06 | 08/06 | 15/06 | 22/06 | 29/06 | 04/07 | 06/07 |
+|------------------------------------------------------|-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|
+| Readequação da proposta e levantamento bibliográfico | x     | x     | x     | x     | x     | x     |       |       |       |       |       |       |       |
+| Experimentações iniciais com DDGAN                   |       |       |       | x     | x     | x     |       |       |       |       |       |       |       |
+| Desenvolvimento dos cenários de experimentação       |       |       |       |       | x     | x     | x     |       |       |       |       |       |       |
+| E2 - Checkpoint                                      |       |       |       |       |       | x     |       |       |       |       |       |       |       |
+| Alterações e validação do código da DDGAN            |       |       |       |       |       | x     | x     | x     |       |       |       |       |       |
+| Treinamento da DDGAN                                 |       |       |       |       |       |       | x     | x     | x     | x     | x     |       |       |
+| Treinamento da GAN                                   |       |       |       |       |       |       | x     | x     | x     | x     | x     |       |       |
+| E3 - Entrega do código                               |       |       |       |       |       |       |       |       |       |       |       | x     |       |
+| Escrita de relatório e compilação de resultados      |       |       |       |       |       |       | x     | x     | x     | x     | x     | x     | x     |
 
 ## Referências Bibliográficas
 
-Mahadevan, Sridhar. "Imagination machines: A new challenge for artificial intelligence." Proceedings of the AAAI Conference on Artificial Intelligence. Vol. 32. No. 1. 2018.
+[1] Z. Xiao, K. Kreis, and A. Vahdat, “Tackling the generative learning trilemma with denoising diffusion gans,”arXiv preprint arXiv:2112.07804, 2021.
 
-Taylor, Marjorie. "1 Transcending Time, Place, and/or." The Oxford handbook of the development of imagination (2013): 3.
+[2] J. Salminen, S.-g. Jung, S. Chowdhury, and B. J. Jansen, “Analyzing demographic bias in artificially generated facial pictures,” in Extended Abstracts of the 2020 CHI Conference on Human Factors in Computing Systems, 2020, pp. 1–8.
 
-Karras, Tero, Samuli Laine, and Timo Aila. "A style-based generator architecture for generative adversarial networks." Proceedings of the IEEE/CVF conference on computer vision and pattern recognition. 2019.
+[3] P. J. Kenfack, D. D. Arapov, R. Hussain, S. A. Kazmi, and A. Khan, “On the fairness of generative adversarial networks (gans),” in 2021 International Conference” Nonlinearity, Information and Robotics”(NIR). IEEE, 2021, pp. 1–7.
 
-Karras, Tero, et al. "Analyzing and improving the image quality of stylegan." Proceedings of the IEEE/CVF conference on computer vision and pattern recognition. 2020.
+[4] I. Goodfellow, J. Pouget-Abadie, M. Mirza, B. Xu, D. Warde-Farley, S. Ozair, A. Courville, and Y. Bengio, “Generative adversarial nets,” Advances in neural information processing systems, vol. 27, 2014.
 
-Karras, Tero, et al. "Training generative adversarial networks with limited data." Advances in Neural Information Processing Systems 33 (2020): 12104-12114.
+[5] S. Menon, A. Damian, S. Hu, N. Ravi, and C. Rudin, “Pulse: Self-supervised photo upsampling via latent space exploration of generative models,” in Proceedings of the ieee/cvf conference on computer vision and pattern recognition, 2020, pp. 2437–2445.
 
-Mirza, Mehdi, and Simon Osindero. "Conditional generative adversarial nets." arXiv preprint arXiv:1411.1784 (2014).
+[6] T. Karras, S. Laine, and T. Aila, “A style-based generator architecture for generative adversarial networks,” in Proceedings of the IEEE/CVF conference on computer vision and pattern recognition, 2019, pp. 4401–4410.
 
-Gatys, Leon A., Alexander S. Ecker, and Matthias Bethge. "A neural algorithm of artistic style." arXiv preprint arXiv:1508.06576 (2015).
+[7] X. Huang, Y. Li, O. Poursaeed, J. Hopcroft, and S. Belongie, “Stacked generative adversarial networks,” in Proceedings of the IEEE conference on computer vision and pattern recognition, 2017, pp. 5077–5086.
 
-Tan, Wei Ren, et al. "ArtGAN: Artwork synthesis with conditional categorical GANs." 2017 IEEE International Conference on Image Processing (ICIP). IEEE, 2017.
+[8] C. Saharia, W. Chan, S. Saxena, L. Li, J. Whang, E. Denton, S. K. S. Ghasemipour, B. K. Ayan, S. S. Mahdavi, R. G. Lopes, T. Salimans, J. Ho, D. J. Fleet, and M. Norouzi, “Photorealistic text-to-image diffusion models with deep language understanding,” 2022. [Online]. Available: https://arxiv.org/abs/2205.11487
 
-Elgammal, Ahmed, et al. "Can: Creative adversarial networks, generating" art" by learning about styles and deviating from style norms." arXiv preprint arXiv:1706.07068 (2017).
+[9] A. Ramesh, P. Dhariwal, A. Nichol, C. Chu, and M. Chen, “Hierarchical text-conditional image generation with clip latents,” arXiv preprint arXiv:2204.06125, 2022.
 
-Mino, Ajkel & Spanakis, Gerasimos. (2018). LoGAN: Generating Logos with a Generative Adversarial Neural Network Conditioned on color.
+[10] J. Ho, A. Jain, and P. Abbeel, “Denoising diffusion probabilistic models,” Advances in Neural Information Processing Systems, vol. 33, pp. 6840–6851, 2020.
 
-Wang, Z., Bovik, A.C., Sheikh, H.R., Simoncelli, E.P. Image quality assessment: from error visibility to structural similarity. IEEE Transactions on Image Processing, 2004, 13 (4)
+[11] C. Raffel, N. Shazeer, A. Roberts, K. Lee, S. Narang, M. Matena, Y. Zhou, W. Li, and P. J. Liu, “Exploring the limits of transfer learning with a unified text-to-text transformer,” arXiv preprint arXiv:1910.10683, 2019.
 
-Borji, Ali. Pros and Cons of GAN Evaluation Measures. 2018. arXiv preprint arXiv:1802.03446v5.
+[12] A. Radford, J. W. Kim, C. Hallacy, A. Ramesh, G. Goh, S. Agarwal, G. Sastry, A. Askell, P. Mishkin, J. Clark et al., “Learning transferable visual models from natural language supervision,” in International Conference on Machine Learning. PMLR, 2021, pp. 8748–8763.
 
-Goodfellow, Ian; Pouget-Abadie, Jean; Mirza, Mehdi; Xu, Bing; Warde-Farley, David; Ozair, Sherjil; Courville, Aaron; Bengio, Yoshua (2014). "Generative Adversarial Nets". Proceedings of the International Conference on Neural Information Processing Systems (NIPS 2014). pp. 2672–2680
+[13] M. Mirza and S. Osindero, “Conditional generative adversarial nets,” arXiv preprint arXiv:1411.1784, 2014.
