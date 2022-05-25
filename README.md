@@ -27,7 +27,11 @@ São frequentes os relatos de viéses na geração de imagens sintéticas com *G
 
 Figura 1: Algoritmo PULSE [5] faz o upsampling do presidente Barack Obama para um homem branco.
 
-Os resultados de um estudo posterior indicaram biases implícitos na *StyleGAN* [2] e viés racial nas imagens geradas: cerca de 73% das imagens geradas pelo método são de pessoas brancas, enquanto pessoas asiáticas e pretas aparecem em cerca de 14 e 10% das imagens sintéticas, respectivamente. Conforme os autores do estudo, a não geração de faces sintéticas de grupos sub-representados diminui ainda mais a habilidade desses indivíduos de serem vistos e ouvidos [2]. Entretanto, neste estudo não está claro se o problema de viés é exclusivo da arquitetura ou se tem interferência da distribuição dos dados de treinamento. Outro experimento com um conjunto de dados controlado [3] observou que, mesmo com uma população de treino constituída de classes balanceadas, StackedGANs [7] são incapazes de gerar imagens sintéticas com distribuições equivalentes. O problema é intensificado quando o conjunto de treino é desbalanceado. Conclui-se, portanto, que o uso dessa família de modelos pode enviesar as tarefas posteriores para as quais os dados sintéticos serão utilizados, já que não respeitam o conceito de *paridade demográfica* [2].
+Os resultados de um estudo posterior indicaram biases implícitos na *StyleGAN* [2] e viés racial nas imagens geradas: cerca de 73% das imagens geradas pelo método são de pessoas brancas, enquanto pessoas asiáticas e pretas aparecem em cerca de 14 e 10% das imagens sintéticas, respectivamente. Conforme os autores do estudo, a não geração de faces sintéticas de grupos sub-representados diminui ainda mais a habilidade desses indivíduos de serem vistos e ouvidos [2]. Entretanto, neste estudo não está claro se o problema de viés é exclusivo da arquitetura ou se tem interferência da distribuição dos dados de treinamento. Outro experimento com um conjunto de dados controlado [3] observou que, mesmo com uma população de treino constituída de classes balanceadas, StackedGANs [7] são incapazes de gerar imagens sintéticas com distribuições equivalentes, como ilustrado na Figura 2. O problema é intensificado quando o conjunto de treino é desbalanceado. Conclui-se, portanto, que o uso dessa família de modelos pode enviesar as tarefas posteriores para as quais os dados sintéticos serão utilizados, já que não respeitam o conceito de *paridade demográfica* [2].
+
+![Densidades de grupos em dataset balanceado](images/group_densities_balanced_dataset.png)
+
+Figura 2: De [3]: Densidades de probabilidade dos grupos MNIST nas imagens geradas quando grupos balanceados (50%/50%)
 
 Recentemente outros dois modelo generativos obtiveram repercussão devido à qualidade das imagens sintéticas: o Imagen [8] e o DALLE-2 [9]. Os resultado foram atingidos a partir do poder conjunto de modelos de difusão [9] e de *embeddings* do T5 [11] ou do CLIP [12], respectivamente. Neste trabalho, objetiva-se o estudo dos possíveis viéses presentes em modelos de difusão, de forma similar ao que foi realizado por [3] para as *StackedGANs*. Mais especificamente, serão comparadas as distribuicões das imagens geradas versus as distribuições do conjunto de treino controlado para *Denoising Diffusion GANs (DDGANs)* [1] e uma arquitetura de GAN que ainda será definida.
 
@@ -45,9 +49,13 @@ Neste projeto investigaremos a capacidade de adequação à métrica de paridade
 
 ### Conjunto de dados
 
-O conjunto de dados MNIST sera modificado para que todas as classes (dígitos) correspondam a um dos dois grupos:
+O conjunto de dados MNIST será modificado para que todas as classes (dígitos) correspondam a um dos dois grupos, como ilustrado na Figura 3:
 - Grupo 1: imagens tradicionais do MNIST, dígitos em branco, fundo preto
 - Grupo 2: imagens MNIST invertidas, com dígitos em preto e fundo branco
+
+![MNIST Dataset Groups](images/MNIST_groups.png)
+
+Figura 3: Ilustração de grupos que serão criados em conjunto MNIST modificado, como em [3]
 
 A seguir, três cenários de experimentação serão avaliados variando as proporções de cada grupo:
 - Cenario A: Grupo 1 e 2 com 30 e 70% do conjunto de treino, respectivamente.
@@ -58,19 +66,19 @@ A seguir, três cenários de experimentação serão avaliados variando as propo
 
 #### DDGAN
 
-*Denoising Diffusion GAN* é a rede proposta por [1] para combater o _trilemma_ dos modelos generativos usuais (GANs, VAEs e modelos de difusão), cujos resultados são sempre um _trade-off_ entre três fatores: (1) rápida amostragem, (2) alta qualidade e (3) cobertura das modas dos dados de treino. Conforme a Figura 2, modelos de difusão [10] geram amostras de ótima qualidade e com cobertura das modas do conjunto de treino, mas o tempo de amostragem é elevado, impedindo seu uso em aplicações do mundo real. Na arquitetura proposta, o processo de _denoising_ é modelado por uma *Conditional GAN* [13], em vez de por Gaussianas Multimodais como nos modelos de difusão clássicos. Essa mudança na arquitetura, ilustrada na Figura 3, permite aumentar em até 2000 vezes a velocidade de amostragem para o conjunto CIFAR10 mantendo a qualidade dos dados sintéticos do modelo de difusão original. A arquitetura da DDGAN pode ser observada na Figura 4.
+*Denoising Diffusion GAN* é a rede proposta por [1] para combater o _trilemma_ dos modelos generativos usuais (GANs, VAEs e modelos de difusão), cujos resultados são sempre um _trade-off_ entre três fatores: (1) rápida amostragem, (2) alta qualidade e (3) cobertura das modas dos dados de treino. Conforme a Figura 4, modelos de difusão [10] geram amostras de ótima qualidade e com cobertura das modas do conjunto de treino, mas o tempo de amostragem é elevado, impedindo seu uso em aplicações do mundo real. Na arquitetura proposta, o processo de _denoising_ é modelado por uma *Conditional GAN* [13], em vez de por Gaussianas Multimodais como nos modelos de difusão clássicos. Essa mudança na arquitetura, ilustrada na Figura 5, permite aumentar em até 2000 vezes a velocidade de amostragem para o conjunto CIFAR10 mantendo a qualidade dos dados sintéticos do modelo de difusão original. A arquitetura da DDGAN pode ser observada na Figura 6.
 
 ![The generative trilemma](images/trilemma.png)
 
-Figura 2. O _trilemma_ de modelos genrativos
+Figura 4. O _trilemma_ de modelos genrativos
 
 ![Denoising with Unimodal Gaussian vs GANS](images/diffusion_gaussian_vs_gans.png)
 
-Figura 3. Mudança introduzida pelas DDGANs: modelagem de _denoising_ usando GANs multimodais
+Figura 5. Mudança introduzida pelas DDGANs: modelagem de _denoising_ usando GANs multimodais
 
 ![DDGAN](images/ddgan.png)
 
-Figura 4. Arquitetura da DDGAN [1]
+Figura 6. Arquitetura da DDGAN [1]
 
 ### Ferramentas a serem utilizadas
 
