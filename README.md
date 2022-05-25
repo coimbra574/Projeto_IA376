@@ -86,7 +86,9 @@ Propomos utilizar abordagem semelhante ao que foi feito em [3], isto é, medir a
 
 ### Resultados esperados
 
+![Resultados Esperados](images/density_possibilities.png)
 
+Figura 5. Resultados esperados após processo de sintetização com dados de treinamento balanceados ou não.
 
 #### Adequações do código
 
