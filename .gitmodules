@@ -1,3 +1,6 @@
 [submodule "src/submodules/denoising-diffusion-gan"]
 	path = src/submodules/denoising-diffusion-gan
 	url = https://github.com/luizapozzobon/denoising-diffusion-gan
+[submodule "src/submodules/stylegan2-pytorch"]
+	path = src/submodules/stylegan2-pytorch
+	url = https://github.com/luizapozzobon/stylegan2-pytorch
