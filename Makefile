@@ -1,4 +1,7 @@
-.PHONY: clean data lint requirements sync_data_to_s3 sync_data_from_s3
+.ONESHELL:
+SHELL = /bin/bash
+
+.PHONY: clean data lint requirements setup sample
 
 #################################################################################
 # GLOBALS                                                                       #
@@ -22,12 +25,9 @@ endif
 
 ## Install Python Dependencies
 requirements: test_environment
-	$(PYTHON_INTERPRETER) -m pip install -U pip setuptools wheel
-	$(PYTHON_INTERPRETER) -m pip install -r requirements.txt
-
-## Make Dataset
-data: requirements
-	$(PYTHON_INTERPRETER) src/data/make_dataset.py data/raw data/processed
+	$(PYTHON_INTERPRETER) -m pip install -U pip pip-tools setuptools wheel
+	$(PYTHON_INTERPRETER) -m pip install -r requirements.txt --ignore-installed
+	$(PYTHON_INTERPRETER) -m pip install -r src/submodules/denoising-diffusion-gan/requirements.txt
 
 ## Delete all compiled Python files
 clean:
@@ -37,30 +37,49 @@ clean:
 ## Lint using flake8
 lint:
 	flake8 src
-
-## Upload Data to S3
-sync_data_to_s3:
-ifeq (default,$(PROFILE))
-	aws s3 sync data/ s3://$(BUCKET)/data/
-else
-	aws s3 sync data/ s3://$(BUCKET)/data/ --profile $(PROFILE)
-endif
-
-## Download Data from S3
-sync_data_from_s3:
-ifeq (default,$(PROFILE))
-	aws s3 sync s3://$(BUCKET)/data/ data/
-else
-	aws s3 sync s3://$(BUCKET)/data/ data/ --profile $(PROFILE)
-endif
+	black src
 
 ## Set up python interpreter environment
 create_environment:
-	conda env create -f environment.yml
+	conda env create -f environment.yml --force
+
+setup: setup_project setup_ddgan
+
+setup_project:
+	$(PYTHON_INTERPRETER) -m pip install -e .
+
+setup_ddgan:
+	cd src/submodules/denoising-diffusion-gan/; $(PYTHON_INTERPRETER) -m pip install -e .
 
 ## Test python environment is setup correctly
 test_environment:
 	$(PYTHON_INTERPRETER) test_environment.py
+
+#################################################################################
+# PROJECT RESULTS                                                               #
+#################################################################################
+
+sample: sample_original sample_ddgan # sample_stylegan
+
+sample_original:
+	$(PYTHON_INTERPRETER) src/data/generate_samples.py original_data --invert_p 0.3 ;
+	$(PYTHON_INTERPRETER) src/data/generate_samples.py original_data --invert_p 0.5 ;
+	$(PYTHON_INTERPRETER) src/data/generate_samples.py original_data --invert_p 0.7
+
+sample_ddgan: 
+	$(PYTHON_INTERPRETER) src/data/generate_samples.py ddgan --weights_path models/ddgan/mnist_0.3/netG_200.pth --params_path models/ddgan/mnist_0.3/params.json ;
+	$(PYTHON_INTERPRETER) src/data/generate_samples.py ddgan --weights_path models/ddgan/mnist_0.5/netG_200.pth --params_path models/ddgan/mnist_0.5/params.json ;
+	$(PYTHON_INTERPRETER) src/data/generate_samples.py ddgan --weights_path models/ddgan/mnist_0.7/netG_200.pth --params_path models/ddgan/mnist_0.7/params.json
+
+# TODO modify weights paths
+# sample_stylegan: 
+	# $(PYTHON_INTERPRETER) src/data/generate_samples.py stylegan2 --weights_path models/stylegan/mnist_0.3/FIXME --params_path models/stylegan/mnist_0.3/params.json ;
+	# $(PYTHON_INTERPRETER) src/data/generate_samples.py stylegan2 --weights_path models/stylegan/mnist_0.5/FIXME --params_path models/stylegan/mnist_0.5/params.json ;
+	# $(PYTHON_INTERPRETER) src/data/generate_samples.py stylegan2 --weights_path models/stylegan/mnist_0.7/FIXME --params_path models/stylegan/mnist_0.7/params.json
+
+distributions: 
+	$(PYTHON_INTERPRETER) src/data/compute_distribution.py data/generated_samples data/processed
+
 
 #################################################################################
 # PROJECT RULES                                                                 #
