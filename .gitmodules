@@ -4,3 +4,6 @@
 [submodule "src/submodules/stylegan2-pytorch"]
 	path = src/submodules/stylegan2-pytorch
 	url = https://github.com/luizapozzobon/stylegan2-pytorch
+[submodule "src/submodules/WassersteinGAN"]
+	path = src/submodules/WassersteinGAN
+	url = https://github.com/coimbra574/WassersteinGAN
