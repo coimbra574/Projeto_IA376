@@ -69,10 +69,13 @@ def main(args):
         if args.model == "ddgan":
             from src.data.generate_samples_ddgan import generate_samples
 
-            generate_samples(args)
-
         elif args.model == "stylegan2":
             raise NotImplementedError("StyleGAN2 sample generation is not implemented.")
+
+        elif args.model == "wgan":
+            from src.data.generate_samples_WGAN import generate_samples
+
+        generate_samples(args)
 
 
 if __name__ == "__main__":
@@ -81,7 +84,7 @@ if __name__ == "__main__":
         "model",
         type=str,
         help="model to generate samples from",
-        choices=["original_data", "ddgan", "stylegan2"],
+        choices=["original_data", "ddgan", "stylegan2", "wgan"],
     )
     parser.add_argument(
         "--weights_path", type=Path, default=None, help="path to weights file"

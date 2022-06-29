@@ -51,6 +51,9 @@ setup_project:
 setup_ddgan:
 	cd src/submodules/denoising-diffusion-gan/; $(PYTHON_INTERPRETER) -m pip install -e .
 
+setup_wgan:
+	cd src/submodules/WassersteinGAN/; $(PYTHON_INTERPRETER) -m pip install -e .
+
 ## Test python environment is setup correctly
 test_environment:
 	$(PYTHON_INTERPRETER) test_environment.py
@@ -76,6 +79,9 @@ sample_ddgan:
 	# $(PYTHON_INTERPRETER) src/data/generate_samples.py stylegan2 --weights_path models/stylegan/mnist_0.3/FIXME --params_path models/stylegan/mnist_0.3/params.json ;
 	# $(PYTHON_INTERPRETER) src/data/generate_samples.py stylegan2 --weights_path models/stylegan/mnist_0.5/FIXME --params_path models/stylegan/mnist_0.5/params.json ;
 	# $(PYTHON_INTERPRETER) src/data/generate_samples.py stylegan2 --weights_path models/stylegan/mnist_0.7/FIXME --params_path models/stylegan/mnist_0.7/params.json
+
+sample_wgan: 
+	# $(PYTHON_INTERPRETER) src/data/generate_samples.py wgan --weights_path models/stylegan/mnist_0.3/model_19.pth --params_path models/wgan/mnist_0.3/generator_config.json 
 
 distributions: 
 	$(PYTHON_INTERPRETER) src/data/compute_distribution.py data/generated_samples data/processed
