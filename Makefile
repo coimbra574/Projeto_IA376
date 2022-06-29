@@ -43,7 +43,7 @@ lint:
 create_environment:
 	conda env create -f environment.yml --force
 
-setup: setup_project setup_ddgan
+setup: setup_project setup_ddgan setup_wgan
 
 setup_project:
 	$(PYTHON_INTERPRETER) -m pip install -e .
@@ -62,7 +62,7 @@ test_environment:
 # PROJECT RESULTS                                                               #
 #################################################################################
 
-sample: sample_original sample_ddgan # sample_stylegan
+sample: sample_original sample_ddgan sample_wgan # sample_stylegan
 
 sample_original:
 	$(PYTHON_INTERPRETER) src/data/generate_samples.py original_data --invert_p 0.3 ;
