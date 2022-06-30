@@ -27,9 +27,10 @@ def generate_samples(args):
     torch.cuda.manual_seed(set_seed)
     torch.cuda.manual_seed_all(set_seed)
 
-    with open(args.params_path, 'r') as gencfg:
-        generator_config = json.loads(gencfg.read())
+    #with open(args.params_path, 'r') as gencfg:
+    #    generator_config = json.loads(gencfg.read())
     
+    generator_config = vars(args)
     imageSize = generator_config["imageSize"]
     nz = generator_config["nz"]
     nc = generator_config["nc"]
@@ -39,6 +40,7 @@ def generate_samples(args):
     mlp_G = generator_config["mlp_G"]
     n_extra_layers = generator_config["n_extra_layers"]
 
+
     if noBN:
         netG = dcgan.DCGAN_G_nobn(imageSize, nz, nc, ngf, ngpu, n_extra_layers)
     elif mlp_G:
@@ -46,15 +48,17 @@ def generate_samples(args):
     else:
         netG = dcgan.DCGAN_G(imageSize, nz, nc, ngf, ngpu, n_extra_layers)
 
-    # load weights
-    netG.load_state_dict(torch.load(args.weights_path)['netG_state_dict'])
 
     # initialize noise
     fixed_noise = torch.FloatTensor(args.num_samples, nz, 1, 1).normal_(0, 1)
 
     if args.cuda:
+        netG.load_state_dict(torch.load(args.weights_path)['netG_state_dict'])
         netG.cuda()
         fixed_noise = fixed_noise.cuda()
+    else:
+        netG.load_state_dict(torch.load(args.weights_path, map_location=torch.device('cpu'))['netG_state_dict'])
+
 
     fake = netG(fixed_noise)
     fake.data = fake.data.mul(0.5).add(0.5)
