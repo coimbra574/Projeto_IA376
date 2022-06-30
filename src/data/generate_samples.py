@@ -70,7 +70,17 @@ def main(args):
             from src.data.generate_samples_ddgan import generate_samples
 
         elif args.model == "stylegan2":
-            raise NotImplementedError("StyleGAN2 sample generation is not implemented.")
+            from src.data.generate_samples_stylegan2 import generate_samples
+
+            generate_samples(
+                results_dir=args.output_dir,
+                name=args.model,
+                weights_path=args.weights_path,
+                num_samples=args.num_samples,
+                img_channels=args.img_channels,
+                image_size=args.image_size,
+                map_location='cuda:0'
+            )
 
         elif args.model == "wgan":
             from src.data.generate_samples_WGAN import generate_samples
