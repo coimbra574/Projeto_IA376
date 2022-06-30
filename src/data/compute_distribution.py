@@ -46,7 +46,7 @@ def main(
         classes = dataset.classes
 
         if any(
-            [re.match(r"([a-zA-Z_]*_[0-9.0-9])", _class) is None for _class in classes]
+            [re.match(r"([a-zA-Z0-9]*([a-z_A-Z]*)?_[0-9]\.[0-9])", _class) is None for _class in classes]
         ):
             raise RuntimeError(
                 f"All folders within {folder} should match the pattern: "
