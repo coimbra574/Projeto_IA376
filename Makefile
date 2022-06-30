@@ -28,6 +28,7 @@ requirements: test_environment
 	$(PYTHON_INTERPRETER) -m pip install -U pip pip-tools setuptools wheel
 	$(PYTHON_INTERPRETER) -m pip install -r requirements.txt --ignore-installed
 	$(PYTHON_INTERPRETER) -m pip install -r src/submodules/denoising-diffusion-gan/requirements.txt
+	$(PYTHON_INTERPRETER) -m pip install -r src/submodules/stylegan2-pytorch/requirements.txt
 
 ## Delete all compiled Python files
 clean:
@@ -43,7 +44,7 @@ lint:
 create_environment:
 	conda env create -f environment.yml --force
 
-setup: setup_project setup_ddgan setup_wgan
+setup: setup_project setup_ddgan setup_wgan setup_stylegan2
 
 setup_project:
 	$(PYTHON_INTERPRETER) -m pip install -e .
@@ -53,6 +54,9 @@ setup_ddgan:
 
 setup_wgan:
 	cd src/submodules/WassersteinGAN/; $(PYTHON_INTERPRETER) -m pip install -e .
+
+setup_stylegan2:
+	cd src/submodules/stylegan2-pytorch/; $(PYTHON_INTERPRETER) -m pip install -e .
 
 ## Test python environment is setup correctly
 test_environment:
@@ -69,16 +73,15 @@ sample_original:
 	$(PYTHON_INTERPRETER) src/data/generate_samples.py original_data --invert_p 0.5 ;
 	$(PYTHON_INTERPRETER) src/data/generate_samples.py original_data --invert_p 0.7
 
-sample_ddgan: 
+sample_ddgan:
 	$(PYTHON_INTERPRETER) src/data/generate_samples.py ddgan --weights_path models/ddgan/mnist_0.3/netG_200.pth --params_path models/ddgan/mnist_0.3/params.json ;
 	$(PYTHON_INTERPRETER) src/data/generate_samples.py ddgan --weights_path models/ddgan/mnist_0.5/netG_200.pth --params_path models/ddgan/mnist_0.5/params.json ;
 	$(PYTHON_INTERPRETER) src/data/generate_samples.py ddgan --weights_path models/ddgan/mnist_0.7/netG_200.pth --params_path models/ddgan/mnist_0.7/params.json
 
-# TODO modify weights paths
-# sample_stylegan: 
-	# $(PYTHON_INTERPRETER) src/data/generate_samples.py stylegan2 --weights_path models/stylegan/mnist_0.3/FIXME --params_path models/stylegan/mnist_0.3/params.json ;
-	# $(PYTHON_INTERPRETER) src/data/generate_samples.py stylegan2 --weights_path models/stylegan/mnist_0.5/FIXME --params_path models/stylegan/mnist_0.5/params.json ;
-	# $(PYTHON_INTERPRETER) src/data/generate_samples.py stylegan2 --weights_path models/stylegan/mnist_0.7/FIXME --params_path models/stylegan/mnist_0.7/params.json
+sample_stylegan: 
+	$(PYTHON_INTERPRETER) src/data/generate_samples.py stylegan2 --weights_path models/stylegan/mnist_0.3/model_700.pth --params_path models/stylegan/mnist_0.3/params.json ;
+	$(PYTHON_INTERPRETER) src/data/generate_samples.py stylegan2 --weights_path models/stylegan/mnist_0.5/model_700.pth --params_path models/stylegan/mnist_0.5/params.json ;
+	$(PYTHON_INTERPRETER) src/data/generate_samples.py stylegan2 --weights_path models/stylegan/mnist_0.7/model_700.pth --params_path models/stylegan/mnist_0.7/params.json
 
 sample_wgan: 
 	# $(PYTHON_INTERPRETER) src/data/generate_samples.py wgan --weights_path models/stylegan/mnist_0.3/model_19.pth --params_path models/wgan/mnist_0.3/generator_config.json 
