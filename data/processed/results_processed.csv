@@ -1,0 +1,8 @@
+,higher_than_threshold,higher_than_threshold,higher_than_threshold
+,mean,mean,mean
+proporção,0.3,0.5,0.7
+amostras,,,
+ddgan,29.97,54.29,69.38
+original,29.82,49.27,69.72
+stylegan2,0.0,100.0,100.0
+wgan,29.75,50.62,69.62
