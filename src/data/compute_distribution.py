@@ -12,7 +12,7 @@ from tqdm import tqdm
 
 
 def main(
-    folder: str, output_dir: str, batch_size: int = 50, threshold: float = 0.5
+    folder: str, output_dir: str, batch_size: int = 50, threshold: float = 0.5, language="pt-br"
 ) -> None:
     """Generate the density plots from mnist digits.
 
@@ -63,26 +63,41 @@ def main(
         batch_results = pd.DataFrame(
             {
                 "x_avg_pixel": avg_pixel,
-                "proportion": [_class.split("_")[-1] for _class in y_str],
+                "samples" if language == "eng" else "amostras": [_class.split("_")[0] for _class in y_str],
+                "proportion" if language == "eng" else "proporção": [_class.split("_")[-1] for _class in y_str],
                 "higher_than_threshold": higher_than_thresh,
-                "samples": [_class.split("_")[0] for _class in y_str],
             }
         )
         results = pd.concat([results, batch_results], axis=0)
     results = results.reset_index(drop=True)
 
-    num_samples = results.groupby(["samples", "proportion"])["x_avg_pixel"].count()
+    if language == "eng":
+        cols = ["samples", "proportion"]
+    else:
+        cols = ["amostras", "proporção"]
+    num_samples = results.groupby(cols)["x_avg_pixel"].count()
     print(num_samples)
 
     plt.figure()
-    g = sns.displot(
-        data=results, hue="samples", x="x_avg_pixel", kind="kde", col="proportion",
-    )
-    g.set_xlabels("Average pixel value")
-    g.fig.subplots_adjust(top=0.8)
-    g.fig.suptitle(
-        f"Density plots of {num_samples.unique().max()} samples of each model and proportion"
-    )
+    if language == "eng":
+        g = sns.displot(
+            data=results, hue="samples", x="x_avg_pixel", kind="kde", col="proportion",
+        )
+        g.set_xlabels("Average pixel value")
+        g.fig.subplots_adjust(top=0.8)
+        g.fig.suptitle(
+            f"Density plots of {num_samples.unique().max()} samples of each model and proportion"
+        )
+    elif language == "pt-br":
+        g = sns.displot(
+            data=results, hue="amostras", x="x_avg_pixel", kind="kde", col="proporção",
+        )
+        g.set_xlabels("Valor médio dos pixels")
+        g.set_ylabels("Densidade")
+        g.fig.subplots_adjust(top=0.8)
+        g.fig.suptitle(
+            f"Densidades de {num_samples.unique().max()} amostras de cada modelo e proporção"
+        )
     plt.savefig(img_path, dpi=300)
 
     if not csv_path.exists():
