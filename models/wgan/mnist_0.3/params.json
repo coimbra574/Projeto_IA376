@@ -1,0 +1,148 @@
+{
+    "nc": {
+        "desc": null,
+        "value": 1
+    },
+    "nz": {
+        "desc": null,
+        "value": 100
+    },
+    "lrD": {
+        "desc": null,
+        "value": 0.00005
+    },
+    "lrG": {
+        "desc": null,
+        "value": 0.00005
+    },
+    "ndf": {
+        "desc": null,
+        "value": 64
+    },
+    "ngf": {
+        "desc": null,
+        "value": 64
+    },
+    "adam": {
+        "desc": null,
+        "value": false
+    },
+    "cuda": {
+        "desc": null,
+        "value": false
+    },
+    "ngpu": {
+        "desc": null,
+        "value": 1
+    },
+    "noBN": {
+        "desc": null,
+        "value": false
+    },
+    "beta1": {
+        "desc": null,
+        "value": 0.5
+    },
+    "mlp_D": {
+        "desc": null,
+        "value": false
+    },
+    "mlp_G": {
+        "desc": null,
+        "value": false
+    },
+    "niter": {
+        "desc": null,
+        "value": 300
+    },
+    "Diters": {
+        "desc": null,
+        "value": 5
+    },
+    "_wandb": {
+        "desc": null,
+        "value": {
+            "t": {
+                "1": [
+                    1,
+                    41,
+                    55
+                ],
+                "2": [
+                    1,
+                    41,
+                    55
+                ],
+                "3": [
+                    3,
+                    13,
+                    15,
+                    16
+                ],
+                "4": "3.7.13",
+                "5": "0.12.20",
+                "8": [
+                    5
+                ]
+            },
+            "framework": "torch",
+            "start_time": 1656589430,
+            "cli_version": "0.12.20",
+            "is_jupyter_run": false,
+            "python_version": "3.7.13",
+            "is_kaggle_kernel": false
+        }
+    },
+    "dataset": {
+        "desc": null,
+        "value": "mnist"
+    },
+    "workers": {
+        "desc": null,
+        "value": 2
+    },
+    "dataroot": {
+        "desc": null,
+        "value": "./data"
+    },
+    "invert_p": {
+        "desc": null,
+        "value": 0.3
+    },
+    "batchSize": {
+        "desc": null,
+        "value": 64
+    },
+    "imageSize": {
+        "desc": null,
+        "value": 32
+    },
+    "test_name": {
+        "desc": null,
+        "value": "invertp_03"
+    },
+    "experiment": {
+        "desc": null,
+        "value": "samples"
+    },
+    "manualSeed": {
+        "desc": null,
+        "value": 1024
+    },
+    "clamp_lower": {
+        "desc": null,
+        "value": -0.01
+    },
+    "clamp_upper": {
+        "desc": null,
+        "value": 0.01
+    },
+    "n_extra_layers": {
+        "desc": null,
+        "value": 0
+    },
+    "load_checkpoint": {
+        "desc": null,
+        "value": null
+    }
+}

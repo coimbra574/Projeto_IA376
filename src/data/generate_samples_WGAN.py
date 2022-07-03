@@ -39,6 +39,7 @@ def generate_samples(args):
     ngpu = generator_config["ngpu"]
     mlp_G = generator_config["mlp_G"]
     n_extra_layers = generator_config["n_extra_layers"]
+    invert_p = generator_config["invert_p"]
 
 
     if noBN:
