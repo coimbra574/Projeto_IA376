@@ -39,46 +39,44 @@ def main(
     csv_path = output_dir / "results.csv"
     img_path = output_dir / "distributions.png"
 
-    if not (csv_path).exists():
-        transform = transforms.Compose([transforms.Grayscale(), transforms.ToTensor(),])
+    transform = transforms.Compose([transforms.Grayscale(), transforms.ToTensor(),])
 
-        dataset = torchvision.datasets.ImageFolder(folder, transform=transform)
-        classes = dataset.classes
+    dataset = torchvision.datasets.ImageFolder(folder, transform=transform)
+    classes = dataset.classes
+    print(f"classes: {classes}")
 
-        if any(
-            [re.match(r"([a-zA-Z0-9]*([a-z_A-Z]*)?_[0-9]\.[0-9])", _class) is None for _class in classes]
-        ):
-            raise RuntimeError(
-                f"All folders within {folder} should match the pattern: "
-                "name_proportion. For example: ddgan_0.3"
-            )
+    if any(
+        [re.match(r"([a-zA-Z0-9]*([a-z_A-Z]*)?_[0-9]\.[0-9])", _class) is None for _class in classes]
+    ):
+        raise RuntimeError(
+            f"All folders within {folder} should match the pattern: "
+            "name_proportion. For example: ddgan_0.3"
+        )
 
-        data_loader = DataLoader(dataset, batch_size=batch_size, shuffle=False)
+    data_loader = DataLoader(dataset, batch_size=batch_size, shuffle=False)
 
-        results = pd.DataFrame()
-        for x, y in tqdm(data_loader):
-            avg_pixel = x.mean(axis=-1).mean(axis=-1).reshape(-1)
-            higher_than_thresh = (avg_pixel >= threshold).float()
-            y_str = list(map(lambda i: classes[i], y.detach().numpy()))
-            batch_results = pd.DataFrame(
-                {
-                    "x_avg_pixel": avg_pixel,
-                    "proportion": [_class.split("_")[-1] for _class in y_str],
-                    "higher_than_threshold": higher_than_thresh,
-                    "model": [_class.split("_")[0] for _class in y_str],
-                }
-            )
-            results = pd.concat([results, batch_results], axis=0)
-        results = results.reset_index(drop=True)
-    else:
-        results = pd.read_csv(csv_path)
+    results = pd.DataFrame()
+    for x, y in tqdm(data_loader):
+        avg_pixel = x.mean(axis=-1).mean(axis=-1).reshape(-1)
+        higher_than_thresh = (avg_pixel >= threshold).float()
+        y_str = list(map(lambda i: classes[i], y.detach().numpy()))
+        batch_results = pd.DataFrame(
+            {
+                "x_avg_pixel": avg_pixel,
+                "proportion": [_class.split("_")[-1] for _class in y_str],
+                "higher_than_threshold": higher_than_thresh,
+                "samples": [_class.split("_")[0] for _class in y_str],
+            }
+        )
+        results = pd.concat([results, batch_results], axis=0)
+    results = results.reset_index(drop=True)
 
-    num_samples = results.groupby(["model", "proportion"])["x_avg_pixel"].count()
+    num_samples = results.groupby(["samples", "proportion"])["x_avg_pixel"].count()
     print(num_samples)
 
     plt.figure()
     g = sns.displot(
-        data=results, hue="model", x="x_avg_pixel", kind="kde", col="proportion",
+        data=results, hue="samples", x="x_avg_pixel", kind="kde", col="proportion",
     )
     g.set_xlabels("Average pixel value")
     g.fig.subplots_adjust(top=0.8)

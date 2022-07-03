@@ -79,13 +79,15 @@ sample_ddgan:
 	$(PYTHON_INTERPRETER) src/data/generate_samples.py ddgan --weights_path models/ddgan/mnist_0.7/netG_200.pth --params_path models/ddgan/mnist_0.7/params.json
 
 sample_stylegan: 
-	$(PYTHON_INTERPRETER) src/data/generate_samples.py stylegan2 --weights_path models/stylegan/mnist_0.3/model_700.pth --params_path models/stylegan/mnist_0.3/params.json ;
-	$(PYTHON_INTERPRETER) src/data/generate_samples.py stylegan2 --weights_path models/stylegan/mnist_0.5/model_700.pth --params_path models/stylegan/mnist_0.5/params.json ;
-	$(PYTHON_INTERPRETER) src/data/generate_samples.py stylegan2 --weights_path models/stylegan/mnist_0.7/model_700.pth --params_path models/stylegan/mnist_0.7/params.json
+	$(PYTHON_INTERPRETER) src/data/generate_samples.py stylegan2 --weights_path models/stylegan2/mnist_0.3/model_700.pt --params_path models/stylegan2/mnist_0.3/params.json ;
+	$(PYTHON_INTERPRETER) src/data/generate_samples.py stylegan2 --weights_path models/stylegan2/mnist_0.5/model_700.pt --params_path models/stylegan2/mnist_0.5/params.json ;
+	$(PYTHON_INTERPRETER) src/data/generate_samples.py stylegan2 --weights_path models/stylegan2/mnist_0.7/model_700.pt --params_path models/stylegan2/mnist_0.7/params.json
 
 
 sample_wgan: 
+	 $(PYTHON_INTERPRETER) src/data/generate_samples.py wgan --weights_path models/wgan/mnist_0.3/model.pth --params_path models/wgan/mnist_0.3/params.json 
 	 $(PYTHON_INTERPRETER) src/data/generate_samples.py wgan --weights_path models/wgan/mnist_0.5/model.pth --params_path models/wgan/mnist_0.5/params.json 
+	 $(PYTHON_INTERPRETER) src/data/generate_samples.py wgan --weights_path models/wgan/mnist_0.7/model.pth --params_path models/wgan/mnist_0.7/params.json 
 
 distributions: 
 	$(PYTHON_INTERPRETER) src/data/compute_distribution.py data/generated_samples data/processed

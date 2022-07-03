@@ -69,6 +69,8 @@ def main(args):
         if args.model == "ddgan":
             from src.data.generate_samples_ddgan import generate_samples
 
+            generate_samples(args)
+
         elif args.model == "stylegan2":
             from src.data.generate_samples_stylegan2 import generate_samples
 
@@ -85,7 +87,8 @@ def main(args):
         elif args.model == "wgan":
             from src.data.generate_samples_WGAN import generate_samples
 
-        generate_samples(args)
+            generate_samples(args)
+
 
 
 if __name__ == "__main__":

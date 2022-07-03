@@ -87,7 +87,7 @@ def generate_samples(
     **kwargs
 ):
     num_samples = kwargs.get('num_samples', 50)
-    weights_path = Path(kwargs.get('weights_path'))
+    weights_path = kwargs.get('weights_path')
     map_location = kwargs.get('map_location', None)
     name = f'{name}_{weights_path.parent.name}'
 
@@ -144,10 +144,5 @@ def generate_samples(
     model.generate_samples(num_samples=num_samples)
     print(f'sample images generated at {results_dir}/{name}')
 
-
-def main():
-    fire.Fire(generate_samples)
-
-
 if __name__ == '__main__':
-    main()
+    fire.Fire(generate_samples)
