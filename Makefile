@@ -85,7 +85,9 @@ sample_stylegan:
 
 
 sample_wgan: 
-	 $(PYTHON_INTERPRETER) src/data/generate_samples.py wgan --weights_path models/wgan/mnist_0.5/model.pth --params_path models/wgan/mnist_0.5/params.json 
+	 $(PYTHON_INTERPRETER) src/data/generate_samples.py wgan --weights_path models/wgan/mnist_0.3/model.pth --params_path models/wgan/mnist_0.3/params.json --invert_p 0.3 ;
+	 $(PYTHON_INTERPRETER) src/data/generate_samples.py wgan --weights_path models/wgan/mnist_0.5/model.pth --params_path models/wgan/mnist_0.5/params.json --invert_p 0.5 ;
+	 $(PYTHON_INTERPRETER) src/data/generate_samples.py wgan --weights_path models/wgan/mnist_0.7/model.pth --params_path models/wgan/mnist_0.7/params.json --invert_p 0.7 
 
 distributions: 
 	$(PYTHON_INTERPRETER) src/data/compute_distribution.py data/generated_samples data/processed

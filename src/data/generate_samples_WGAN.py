@@ -39,6 +39,7 @@ def generate_samples(args):
     ngpu = generator_config["ngpu"]
     mlp_G = generator_config["mlp_G"]
     n_extra_layers = generator_config["n_extra_layers"]
+    invert_p = generator_config["invert_p"]
 
 
     if noBN:
@@ -63,9 +64,7 @@ def generate_samples(args):
     fake = netG(fixed_noise)
     fake.data = fake.data.mul(0.5).add(0.5)
 
-    folder_name = os.path.basename(args.weights_path)
-    folder_name = folder_name.split(".")
-    save_dir = str(args.output_dir) + "/WGAN_" + str(folder_name[0])
+    save_dir = str(args.output_dir) + "/wgan_" + str(invert_p)
     print(f"Saving on {save_dir}")
 
     if not os.path.exists(save_dir):
