@@ -12,6 +12,11 @@ oferecida no primeiro semestre de 2022, na Unicamp, sob supervisão da Profa. Dr
 > | Luiza Amador Pozzobon  | 233818  | Eng. de Controle e Automação |
 > | Tainá de Souza Coimbra  | 157305  | Eng. Eletricista |
 
+## Resumo (Abstract)
+
+Os resultados recentes reportados por um modelo generativo estado-da-arte baseado em difusão sugerem uma solução para o problema enfrentado pelas GANs de representatividade dos dados de treino. Neste trabalho, avaliou-se a Representação Proporcional, uma métrica de *fairness*, para um modelo dessa arquitetura estado-da-arte, a *Denoising Diffusion GAN*, e dois modelos da família das GANs, StyleGAN2 e WassersteinGAN. Treinados em conjuntos de dados MNIST modificados, apenas DDGAN e WGAN produziram distribuições dos grupos semelhantes aos conjuntos de treino. Esses resultados sugerem que a DDGAN é potencialmente capaz de atingir  Representação Proporcional com alta qualidade de imagens.
+
+
 ## Execução do projeto
 
 O tutorial de como executar o projeto está disponível no [README_SETUP.md](README_SETUP.md)
@@ -28,6 +33,7 @@ As curvas de treinamento estão nos links a seguir:
 - StyleGAN2: [Cenário A](https://wandb.ai/lupozz/stylegan2-stylegan2_0.3), [Cenário B](https://wandb.ai/lupozz/stylegan2-stylegan2_0.5), [Cenário C](https://wandb.ai/lupozz/stylegan2-stylegan2_0.7)
 - WGAN: [Cenário A](https://wandb.ai/coimbra574/WGAN-mnist/runs/3s5jrir5?), [Cenário B](https://wandb.ai/coimbra574/WGAN-mnist/runs/mir0hmmo?), [Cenário C](https://wandb.ai/alvaroacapelo/WGAN-mnist/runs/18kh3utg)
 
+
 ### Estrutura de teste
 
 - Grupo 1: imagens MNIST invertidas, com dígitos em preto e fundo branco
@@ -39,12 +45,21 @@ Três cenários de experimentação foram avaliados variando as proporções de 
 2. Cenário B: Grupos 1 e 2 com 50 e 50\% do conjunto de treino, respectivamente.
 3. Cenário C: Grupos 1 e 2 com 70 e 30\% do conjunto de treino, respectivamente.
 
+
 ### Resultados
+<br>
 
 ![](images/Model_densities.jpeg)
 
 Figura 1: Comparação das densidades de imagens sintetizadas por cada arquitetura (DDGAN, StyleGAN2 e WGAN) versus a densidade original dos dados em três cenários de teste. Os cenários de teste correspondem ao treinamento dos modelos sob diferentes proporções do dataset MNIST com fundo preto ou branco.
 
-![](images/generated_samples.png)
+<br>
 
-Figura 2: Amostras geradas por cada arquitetura em cada cenário de teste.
+<p align="center">
+  <img src="images/generated_samples.png"/>
+</p>
+
+<p align="center">
+  Figura 2: Amostras geradas por cada arquitetura em cada cenário de teste.
+</p>
+
