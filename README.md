@@ -26,7 +26,7 @@ Os pesos dos modelos e parâmetros de treinamentos então [neste link](https://d
 As curvas de treinamento estão nos links a seguir:
 - DDGAN, [todos os cenários](https://wandb.ai/lupozz/ddgan-mnist).
 - StyleGAN2: [Cenário A](https://wandb.ai/lupozz/stylegan2-stylegan2_0.3), [Cenário B](https://wandb.ai/lupozz/stylegan2-stylegan2_0.5), [Cenário C](https://wandb.ai/lupozz/stylegan2-stylegan2_0.7)
-- WGAN: [Cenário A](https://wandb.ai/coimbra574/WGAN-mnist/groups/MNIST), [Cenário B](https://wandb.ai/coimbra574/WGAN-mnist/groups/MNIST), [Cenário C](https://wandb.ai/alvaroacapelo/WGAN-mnist/runs/18kh3utg)
+- WGAN: [Cenário A](https://wandb.ai/coimbra574/WGAN-mnist/runs/3s5jrir5?), [Cenário B](https://wandb.ai/coimbra574/WGAN-mnist/runs/mir0hmmo?), [Cenário C](https://wandb.ai/alvaroacapelo/WGAN-mnist/runs/18kh3utg)
 
 ### Estrutura de teste
 
